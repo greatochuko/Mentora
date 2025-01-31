@@ -49,7 +49,9 @@ export default function RegisterPage() {
         <div className="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center gap-8 p-8">
           <div className="flex flex-col items-center justify-center gap-2">
             <h2 className="font-medium text-blue-600">Fobework LMS</h2>
-            <h1 className="text-3xl font-medium">Create your account! 🚀</h1>
+            <h1 className="text-2xl font-medium sm:text-[1.75rem]">
+              Create your account! 🚀
+            </h1>
             <p className="text-center text-zinc-500">
               Sign up now and take the first step toward something amazing.
             </p>
