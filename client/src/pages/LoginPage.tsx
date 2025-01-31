@@ -40,8 +40,10 @@ export default function LoginPage() {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                className="rounded-md border border-zinc-300 p-2 ring-zinc-300 ring-offset-1 outline-none focus-visible:ring-2"
-                placeholder="Enter your Registered Email"
+                className="w-full rounded-md border border-zinc-300 p-2 ring-zinc-300 ring-offset-1 outline-none focus-visible:ring-2"
+                placeholder="hello@example.com"
+                id="email"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -50,8 +52,10 @@ export default function LoginPage() {
               <label htmlFor="password">Password</label>
               <input
                 type={showPassword ? "text" : "password"}
-                className="rounded-md border border-zinc-300 p-2 ring-zinc-300 ring-offset-1 outline-none focus-visible:ring-2"
+                className="w-full rounded-md border border-zinc-300 p-2 ring-zinc-300 ring-offset-1 outline-none focus-visible:ring-2"
                 placeholder="Enter your Password"
+                id="password"
+                name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
