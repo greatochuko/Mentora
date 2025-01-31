@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { Router } from "express";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -21,8 +22,8 @@ router.post("/register", async (req, res) => {
     }
 
     // Check if the user already exists
-    const userExists = await User.find({ email });
-    if (userExists.length > 0) {
+    const userExists = await User.findOne({ email });
+    if (userExists) {
       return res
         .status(400)
         .json({ message: "User with this email already exists" });
@@ -42,6 +43,16 @@ router.post("/register", async (req, res) => {
 
     const newUser = await User.findById(createdUser._id).select("-password");
 
+    // Create a token
+    const token = jwt.sign({ id: createdUser._id }, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+
     res
       .status(200)
       .json({ message: "User created successfully", data: newUser });
@@ -50,8 +61,46 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
-  res.json({ message: "Login route" });
+router.post("/login", async (req, res) => {
+  try {
+    // Get the user input
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Please provide the email and password" });
+    }
+
+    // Check if the user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Invalid email and password combination" });
+    }
+
+    // Check if the password is correct
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res
+        .status(400)
+        .json({ message: "Invalid email and password combination" });
+    }
+
+    // Create a token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    res.json({ message: "Login successful", data: user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 export default router;
