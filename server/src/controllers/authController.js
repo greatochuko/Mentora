@@ -1,25 +1,35 @@
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
 export async function register(req, res) {
   try {
     // Get the user input
     const { firstName, lastName, email, password } = req.body;
     if (!firstName || !lastName || !email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Please provide the name, email and password" });
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: "Please provide the name, email and password",
+      });
     }
 
     // Check if the email is valid
     const emailRegex = /\S+@\S+\.\S+/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: "Invalid email" });
+      return res
+        .status(422)
+        .json({ message: "Invalid email", success: false, data: null });
     }
 
     // Check if the user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res
-        .status(400)
-        .json({ message: "User with this email already exists" });
+      return res.status(409).json({
+        message: "User with this email already exists",
+        success: false,
+        data: null,
+      });
     }
 
     // Encrypt the password
@@ -48,7 +58,11 @@ export async function register(req, res) {
 
     res
       .status(200)
-      .json({ message: "User created successfully", data: newUser });
+      .json({
+        message: "User created successfully",
+        data: newUser,
+        success: true,
+      });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -59,25 +73,31 @@ export async function login(req, res) {
     // Get the user input
     const { email, password } = req.body;
     if (!email || !password) {
-      return res
-        .status(400)
-        .json({ message: "Please provide the email and password" });
+      return res.status(400).json({
+        message: "Please provide the email and password",
+        success: false,
+        data: null,
+      });
     }
 
     // Check if the user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(400)
-        .json({ message: "Invalid email and password combination" });
+      return res.status(401).json({
+        message: "Invalid email and password combination",
+        success: false,
+        data: null,
+      });
     }
 
     // Check if the password is correct
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res
-        .status(400)
-        .json({ message: "Invalid email and password combination" });
+      return res.status(401).json({
+        message: "Invalid email and password combination",
+        success: false,
+        data: null,
+      });
     }
 
     // Create a token
@@ -90,7 +110,11 @@ export async function login(req, res) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    res.json({ message: "Login successful", data: user });
+    res.json({
+      message: "Login successful",
+      data: user,
+      success: true,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
