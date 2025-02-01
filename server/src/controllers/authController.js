@@ -53,6 +53,7 @@ export async function register(req, res) {
 
     res.cookie("token", token, {
       httpOnly: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       secure: process.env.NODE_ENV === "production",
     });
 
@@ -105,6 +106,7 @@ export async function login(req, res) {
 
     res.cookie("token", token, {
       httpOnly: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       secure: process.env.NODE_ENV === "production",
     });
 
@@ -142,4 +144,15 @@ export async function getSession(req, res) {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+}
+
+export async function logout(req, res) {
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    expires: new Date(0),
+  });
+  res
+    .status(200)
+    .json({ message: "Logged out successfully", success: true, data: null });
 }
