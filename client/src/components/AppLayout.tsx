@@ -3,7 +3,7 @@ import Header from "./Header";
 
 export default function AppLayout() {
   return (
-    <main>
+    <main className="min-h-screen flex-1 bg-zinc-50">
       <Header />
       <Outlet />
     </main>
