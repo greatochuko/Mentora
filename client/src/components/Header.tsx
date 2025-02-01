@@ -28,7 +28,7 @@ export default function Header() {
           <li className="hidden sm:block">
             <Link
               to={"/courses"}
-              className="block rounded-md px-4 py-2 text-zinc-500 duration-200 hover:text-blue-600"
+              className="block rounded-md px-3 py-1.5 text-zinc-500 duration-200 hover:text-blue-600"
             >
               All Courses
             </Link>
@@ -41,7 +41,7 @@ export default function Header() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search your courses here..."
-            className="w-full rounded-full border border-zinc-300 px-4 py-2 pl-8"
+            className="w-full rounded-full border border-zinc-300 px-3 py-1.5 pl-8"
           />
           <LuSearch className="absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 stroke-zinc-500" />
         </form>
@@ -54,11 +54,11 @@ export default function Header() {
         ) : user ? (
           <UserDropdown user={user} />
         ) : (
-          <ul className="flex items-center gap-2">
+          <ul className="flex items-center gap-4">
             <li className="hidden sm:block">
               <Link
                 to={"/login"}
-                className="block rounded-md px-4 py-2 text-zinc-500 duration-200 hover:text-blue-600"
+                className="block rounded-md border border-blue-600 px-3 py-1.5 font-medium text-blue-600 duration-200 hover:bg-zinc-100"
               >
                 Login
               </Link>
@@ -66,7 +66,7 @@ export default function Header() {
             <li>
               <Link
                 to={"/register"}
-                className="block rounded-md bg-blue-600 px-4 py-2 text-white duration-200 hover:bg-blue-600/80"
+                className="block rounded-md bg-blue-600 px-3 py-1.5 font-medium text-white duration-200 hover:bg-blue-600/80"
               >
                 Register
               </Link>

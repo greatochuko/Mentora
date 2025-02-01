@@ -4,12 +4,21 @@
 
 @layer base {
   * {
-    font-family: "Outfit", serif;
+    font-family: "Outfit", sans-serif;
     color: #1a1a1a;
     outline: none;
   }
 
   button {
     cursor: pointer;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
   }
 }
