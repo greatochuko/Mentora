@@ -48,7 +48,7 @@ export async function register(req, res) {
 
     // Create a token
     const token = jwt.sign({ id: createdUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "30d",
+      expiresIn: "1d",
     });
 
     res.cookie("token", token, {
@@ -56,13 +56,11 @@ export async function register(req, res) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    res
-      .status(200)
-      .json({
-        message: "User created successfully",
-        data: newUser,
-        success: true,
-      });
+    res.status(200).json({
+      message: "User created successfully",
+      data: newUser,
+      success: true,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -102,7 +100,7 @@ export async function login(req, res) {
 
     // Create a token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "30d",
+      expiresIn: "1d",
     });
 
     res.cookie("token", token, {
@@ -115,6 +113,32 @@ export async function login(req, res) {
       data: user,
       success: true,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export async function getSession(req, res) {
+  try {
+    const { token } = req.cookies;
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "Invalid token", success: false, data: null });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized", success: false, data: null });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Session active", success: true, data: user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
