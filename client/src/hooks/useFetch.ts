@@ -2,14 +2,12 @@ import { useState } from "react";
 
 export default function useFetch({
   url,
-  includeCredentials,
   body,
   onSuccess,
   onFailure,
   onComplete,
 }: {
   url: string;
-  includeCredentials?: boolean;
   body?: Record<string, any>;
   onSuccess?: (result: any) => void;
   onFailure?: (errorMessage: string) => void;
@@ -27,7 +25,7 @@ export default function useFetch({
         method: body ? "POST" : "GET",
         body: body ? JSON.stringify(body) : undefined,
         headers: { "Content-Type": "Application/json" },
-        credentials: includeCredentials ? "include" : undefined,
+        credentials: "include",
       });
 
       const result = await response.json();

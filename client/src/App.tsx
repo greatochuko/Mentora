@@ -5,6 +5,7 @@ import AuthGuard from "./components/AuthGuard";
 import RegisterPage from "./pages/RegisterPage";
 import AppLayout from "./components/AppLayout";
 import AuthLayout from "./components/AuthLayout";
+import UserProvider from "./context/userContext";
 
 const router = createBrowserRouter([
   {
@@ -32,5 +33,9 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  );
 }
