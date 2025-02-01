@@ -3,19 +3,29 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import AuthGuard from "./components/AuthGuard";
 import RegisterPage from "./pages/RegisterPage";
+import AppLayout from "./components/AppLayout";
+import AuthLayout from "./components/AuthLayout";
 
 const router = createBrowserRouter([
-  { index: true, element: <HomePage /> },
+  {
+    element: <AppLayout />,
+    children: [{ index: true, element: <HomePage /> }],
+  },
   {
     element: <AuthGuard />,
     children: [
       {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/register",
-        element: <RegisterPage />,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/register",
+            element: <RegisterPage />,
+          },
+        ],
       },
     ],
   },
