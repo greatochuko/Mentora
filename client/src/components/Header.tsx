@@ -1,7 +1,11 @@
 import { LuSearch } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../context/userContext";
+import UserDropdown from "./UserDropdown";
 
 export default function Header() {
+  const { user, loadingSession } = useUserContext();
+
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
   }
@@ -28,7 +32,7 @@ export default function Header() {
           </li>
         </ul>
 
-        <form onSubmit={handleSearch} className="relative max-w-80 flex-1">
+        <form onSubmit={handleSearch} className="relative max-w-96 flex-1">
           <input
             type="text"
             placeholder="Search your courses here..."
@@ -37,24 +41,33 @@ export default function Header() {
           <LuSearch className="absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 stroke-zinc-500" />
         </form>
 
-        <ul className="flex items-center gap-2">
-          <li className="hidden sm:block">
-            <Link
-              to={"/login"}
-              className="block rounded-md px-4 py-2 text-zinc-500 duration-200 hover:text-blue-600"
-            >
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/login"}
-              className="block rounded-md bg-blue-600 px-4 py-2 text-white duration-200 hover:bg-blue-600/80"
-            >
-              Signup
-            </Link>
-          </li>
-        </ul>
+        {loadingSession ? (
+          <div className="flex items-center gap-1">
+            <div className="h-8 w-8 animate-pulse rounded-full bg-zinc-100"></div>
+            <div className="h-4 w-16 animate-pulse rounded-md bg-zinc-100"></div>
+          </div>
+        ) : user ? (
+          <UserDropdown user={user} />
+        ) : (
+          <ul className="flex items-center gap-2">
+            <li className="hidden sm:block">
+              <Link
+                to={"/login"}
+                className="block rounded-md px-4 py-2 text-zinc-500 duration-200 hover:text-blue-600"
+              >
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/register"}
+                className="block rounded-md bg-blue-600 px-4 py-2 text-white duration-200 hover:bg-blue-600/80"
+              >
+                Register
+              </Link>
+            </li>
+          </ul>
+        )}
       </nav>
     </header>
   );

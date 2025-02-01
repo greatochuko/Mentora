@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 
-type UserType = {
+export type UserType = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  profilePicture: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -13,7 +14,12 @@ type UserType = {
 const userContext = createContext<{
   user: UserType | null;
   loadingSession: boolean;
-}>({ user: null, loadingSession: true });
+  updateUser: (newUser: UserType | null) => void;
+}>({
+  user: null,
+  loadingSession: true,
+  updateUser: () => {},
+});
 
 export default function UserProvider({
   children,
@@ -40,8 +46,12 @@ export default function UserProvider({
     getSession();
   }, []);
 
+  function updateUser(newUser: UserType | null) {
+    setUser(newUser);
+  }
+
   return (
-    <userContext.Provider value={{ user, loadingSession }}>
+    <userContext.Provider value={{ user, loadingSession, updateUser }}>
       {children}
     </userContext.Provider>
   );

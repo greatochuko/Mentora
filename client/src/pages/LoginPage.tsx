@@ -3,18 +3,22 @@ import { useState } from "react";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useFetch from "../hooks/useFetch";
+import { useUserContext } from "../context/userContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const { updateUser } = useUserContext();
+
   const navigate = useNavigate();
 
   const { error, loading, fetchData } = useFetch({
     url: "/auth/login",
     body: { email, password },
-    onSuccess() {
+    onSuccess(result) {
+      updateUser(result.data);
       navigate("/", { replace: true });
     },
   });
@@ -24,9 +28,11 @@ export default function LoginPage() {
     await fetchData();
   }
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-8 p-8">
+    <div className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-8 p-8 text-sm">
       <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="font-medium text-blue-600">Fobework LMS</h2>
+        <Link to={"/"} className="text-base font-medium text-blue-600">
+          Fobework LMS
+        </Link>
         <h1 className="text-2xl font-medium sm:text-[1.75rem]">
           Welcome Back! 👋
         </h1>
@@ -60,7 +66,7 @@ export default function LoginPage() {
           />
           <button
             type="button"
-            className="absolute right-3 bottom-3 cursor-pointer"
+            className="absolute right-3 bottom-3"
             onClick={() => setShowPassword((prev) => !prev)}
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -70,7 +76,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-blue-600 px-4 py-2 font-medium text-white duration-200 hover:bg-blue-600/90 disabled:cursor-not-allowed disabled:bg-blue-600/60"
+          className="flex h-10 items-center justify-center rounded-md bg-blue-600 px-4 py-2 font-medium text-white duration-200 hover:bg-blue-600/90 disabled:cursor-not-allowed disabled:bg-blue-600/60"
         >
           {loading ? <LoadingIndicator /> : "Login"}
         </button>

@@ -8,4 +8,8 @@
     color: #1a1a1a;
     outline: none;
   }
+
+  button {
+    cursor: pointer;
+  }
 }

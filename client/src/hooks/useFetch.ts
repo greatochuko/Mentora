@@ -3,12 +3,14 @@ import { useState } from "react";
 export default function useFetch({
   url,
   body,
+  method,
   onSuccess,
   onFailure,
   onComplete,
 }: {
   url: string;
   body?: Record<string, any>;
+  method?: "GET" | "POST" | "PUT" | "DELETE";
   onSuccess?: (result: any) => void;
   onFailure?: (errorMessage: string) => void;
   onComplete?: () => void;
@@ -22,7 +24,7 @@ export default function useFetch({
     setError(null);
     try {
       const response = await fetch(`http://localhost:5000/api/v1${url}`, {
-        method: body ? "POST" : "GET",
+        method: method || body ? "POST" : "GET",
         body: body ? JSON.stringify(body) : undefined,
         headers: { "Content-Type": "Application/json" },
         credentials: "include",

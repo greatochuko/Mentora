@@ -3,6 +3,7 @@ import { useState } from "react";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useFetch from "../hooks/useFetch";
+import { useUserContext } from "../context/userContext";
 
 export default function RegisterPage() {
   const [firstName, setFirstName] = useState("");
@@ -13,12 +14,15 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const { updateUser } = useUserContext();
+
   const navigate = useNavigate();
 
   const { error, loading, fetchData } = useFetch({
     url: "/auth/register",
     body: { firstName, lastName, email, password },
-    onSuccess() {
+    onSuccess(result) {
+      updateUser(result.data);
       navigate("/", { replace: true });
     },
   });
@@ -43,9 +47,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-8 p-8">
+    <div className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-8 p-8 text-sm">
       <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="font-medium text-blue-600">Fobework LMS</h2>
+        <Link to={"/"} className="text-base font-medium text-blue-600">
+          Fobework LMS
+        </Link>
         <h1 className="text-2xl font-medium sm:text-[1.75rem]">
           Create your account! 🚀
         </h1>
@@ -106,7 +112,7 @@ export default function RegisterPage() {
             />
             <button
               type="button"
-              className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-sm border border-transparent p-1 hover:border-zinc-300 hover:bg-zinc-100 focus-visible:border-zinc-300 focus-visible:bg-zinc-100"
+              className="absolute top-1/2 right-2 -translate-y-1/2 rounded-sm border border-transparent p-1 hover:border-zinc-300 hover:bg-zinc-100 focus-visible:border-zinc-300 focus-visible:bg-zinc-100"
               onClick={() => setShowPassword((prev) => !prev)}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -132,7 +138,7 @@ export default function RegisterPage() {
             />
             <button
               type="button"
-              className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-sm border border-transparent p-1 hover:border-zinc-300 hover:bg-zinc-100 focus-visible:border-zinc-300 focus-visible:bg-zinc-100"
+              className="absolute top-1/2 right-2 -translate-y-1/2 rounded-sm border border-transparent p-1 hover:border-zinc-300 hover:bg-zinc-100 focus-visible:border-zinc-300 focus-visible:bg-zinc-100"
               onClick={() => setShowConfirmPassword((prev) => !prev)}
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -146,7 +152,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading || cannotSubmit}
-          className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-blue-600 px-4 py-2 font-medium text-white ring-blue-500 ring-offset-2 duration-200 hover:bg-blue-600/90 focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-blue-600/60"
+          className="flex h-10 items-center justify-center rounded-md bg-blue-600 px-4 py-2 font-medium text-white ring-blue-500 ring-offset-2 duration-200 hover:bg-blue-600/90 focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-blue-600/60"
         >
           {loading ? <LoadingIndicator /> : "Register"}
         </button>
