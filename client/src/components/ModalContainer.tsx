@@ -9,7 +9,7 @@ export default function ModalContainer({
 }) {
   return (
     <div
-      className={`fixed top-0 left-0 h-full w-full bg-black/30 backdrop-blur-xs duration-200 ${open ? "visible opacity-100" : "invisible opacity-0"}`}
+      className={`fixed top-0 left-0 z-30 h-full w-full bg-black/30 backdrop-blur-xs duration-200 ${open ? "visible opacity-100" : "invisible opacity-0"}`}
       onClick={closeModal}
     >
       {children}

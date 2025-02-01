@@ -2,8 +2,11 @@ import { LuSearch } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import UserDropdown from "./UserDropdown";
+import { useState } from "react";
 
 export default function Header() {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const { user, loadingSession } = useUserContext();
 
   function handleSearch(e: React.FormEvent) {
@@ -35,6 +38,8 @@ export default function Header() {
         <form onSubmit={handleSearch} className="relative max-w-96 flex-1">
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search your courses here..."
             className="w-full rounded-full border border-zinc-300 px-4 py-2 pl-8"
           />

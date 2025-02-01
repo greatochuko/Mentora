@@ -54,7 +54,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
           )}
         </button>
         <div
-          className={`absolute top-[120%] right-0 flex w-32 flex-col rounded-md border border-zinc-100 bg-white p-2 shadow duration-100 ${dropdownOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"}`}
+          className={`absolute top-[120%] right-0 z-20 flex w-32 flex-col rounded-md border border-zinc-100 bg-white p-2 shadow duration-100 ${dropdownOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"}`}
         >
           <button
             onClick={openSignOutModal}
