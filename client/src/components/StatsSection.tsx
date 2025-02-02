@@ -25,7 +25,7 @@ const appStats = [
 
 export default function StatsSection() {
   return (
-    <div className="grid rounded-md bg-zinc-100 p-8 md:grid-cols-3">
+    <div className="grid gap-4 rounded-md bg-zinc-100 p-8 md:grid-cols-3">
       {appStats.map((stat) => (
         <div key={stat.title} className="flex gap-4">
           <div className="rounded-md bg-white p-4">

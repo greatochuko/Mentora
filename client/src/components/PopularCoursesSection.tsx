@@ -87,14 +87,14 @@ export default function PopularCoursesSection() {
                 .map((_, index) => (
                   <CourseCardWireframe
                     key={index}
-                    className="min-w-60 flex-1 snap-start sm:min-w-64"
+                    className="min-w-60 flex-1 snap-start snap-always sm:min-w-64"
                   />
                 ))
             : filteredCourses.map((course) => (
                 <CourseCard
                   course={course}
                   key={course._id}
-                  className="min-w-60 flex-1 snap-start sm:min-w-64"
+                  className="min-w-60 flex-1 snap-start snap-always sm:min-w-64"
                 />
               ))}
         </div>

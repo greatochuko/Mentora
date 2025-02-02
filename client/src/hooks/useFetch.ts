@@ -28,12 +28,15 @@ export default function useFetch({
     setError(null);
     let result;
     try {
-      const response = await fetch(`http://192.168.43.73:5000/api/v1${url}`, {
-        method: method || body ? "POST" : "GET",
-        body: body ? JSON.stringify(body) : undefined,
-        headers: { "Content-Type": "Application/json" },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/v1${url}`,
+        {
+          method: method || body ? "POST" : "GET",
+          body: body ? JSON.stringify(body) : undefined,
+          headers: { "Content-Type": "Application/json" },
+          credentials: "include",
+        },
+      );
 
       result = await response.json();
 

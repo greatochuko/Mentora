@@ -61,7 +61,7 @@ export default function CourseCard({
           </span>
         </p>
         <div className="mt-auto flex items-center justify-between">
-          <p>
+          <p className="font-semibold">
             ${wholePrice} <sup>{centPrice}</sup>
           </p>
           <button className="rounded-full bg-blue-500 px-3 py-1.5 text-sm font-medium text-white duration-200 hover:bg-blue-600">
