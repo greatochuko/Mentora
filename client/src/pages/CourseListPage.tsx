@@ -5,9 +5,10 @@ import CourseCard, { CourseType } from "../components/CourseCard";
 import CourseCardWireframe from "../components/CourseCardWireframe";
 import Filter from "../components/Filter";
 import Paginator from "../components/Paginator";
+import { MdFilterList, MdFilterListOff } from "react-icons/md";
 
 export default function CourseListPage() {
-  const [showFilter, setShowFilter] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
   const [sortBy, setSortBy] = useState<string>();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,19 +37,32 @@ export default function CourseListPage() {
 
   return (
     <div className="mx-auto flex w-9/10 max-w-7xl py-8">
-      <Filter showFilter={showFilter} />
+      <Filter
+        showFilter={showFilter}
+        closeFilter={() => setShowFilter(false)}
+      />
       <div className="flex min-w-60 flex-1 flex-col gap-4">
-        <div className="flex justify-between gap-4">
-          <h1 className="text-lg font-medium">
+        <div className="flex flex-wrap justify-between gap-4">
+          <h1 className="w-full text-lg font-medium sm:w-fit">
             We found <span className="text-blue-600">{totalResults}</span>{" "}
             courses for you
           </h1>
+          <button
+            onClick={() => setShowFilter((prev) => !prev)}
+            className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm duration-300 hover:bg-zinc-100 sm:order-3"
+          >
+            {showFilter ? (
+              <MdFilterListOff className="h-4 w-4" />
+            ) : (
+              <MdFilterList className="h-4 w-4" />
+            )}
+          </button>
           <select
             name="sort"
             id="sort"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="ml-auto rounded-md border border-zinc-300 px-3 py-1.5 text-sm duration-200"
+            className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm duration-200 sm:ml-auto"
           >
             <option value={"default"}>Sort By</option>
             <option value={"newest"} className="hover:bg-blue-500">
@@ -58,12 +72,6 @@ export default function CourseListPage() {
               Oldest first
             </option>
           </select>
-          <button
-            onClick={() => setShowFilter((prev) => !prev)}
-            className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm hover:bg-zinc-100"
-          >
-            {showFilter ? "Hide" : "Show"} Filter
-          </button>
         </div>
         <div className="grid gap-4 sm:grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))]">
           {loading
