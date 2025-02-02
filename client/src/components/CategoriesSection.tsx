@@ -84,9 +84,9 @@ export default function CategoriesSection() {
           <li key={category.slug}>
             <Link
               to={`/categories/${category.slug}`}
-              className="flex gap-2 rounded-md border border-zinc-100 bg-white p-2 shadow-xs duration-300 hover:shadow-md"
+              className="flex h-full gap-2 rounded-md border border-zinc-100 bg-white p-2 shadow-xs duration-300 hover:shadow-md"
             >
-              <div className="aspect-square rounded bg-blue-100 p-5">
+              <div className="flex aspect-square items-center justify-center rounded bg-blue-100 p-5">
                 <category.Icon className="h-6 w-6 fill-blue-600" />
               </div>
               <div className="flex flex-1 flex-col justify-between">

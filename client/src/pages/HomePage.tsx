@@ -1,6 +1,7 @@
 import CategoriesSection from "../components/CategoriesSection";
 import Hero from "../components/Hero";
 import PopularCoursesSection from "../components/PopularCoursesSection";
+import ReviewsSection from "../components/ReviewsSection";
 import StatsSection from "../components/StatsSection";
 
 export default function HomePage() {
@@ -11,6 +12,7 @@ export default function HomePage() {
         <PopularCoursesSection />
         <StatsSection />
         <CategoriesSection />
+        <ReviewsSection />
       </div>
     </div>
   );

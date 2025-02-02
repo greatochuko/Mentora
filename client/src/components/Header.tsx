@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header className="bg-white py-3 text-sm shadow-xs">
-      <nav className="mx-auto flex w-[95%] max-w-7xl items-center justify-between gap-4 sm:w-9/10">
+      <nav className="mx-auto flex w-9/10 max-w-7xl items-center justify-between gap-4">
         <ul className="flex items-center gap-2">
           <li>
             <Link
