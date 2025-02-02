@@ -13,6 +13,10 @@
     cursor: pointer;
   }
 
+  li {
+    list-style: none;
+  }
+
   .no-scrollbar {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */

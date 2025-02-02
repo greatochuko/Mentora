@@ -41,7 +41,7 @@ export default function Header() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search your courses here..."
-            className="w-full rounded-full border border-zinc-300 px-3 py-1.5 pl-8"
+            className="w-full rounded-full border border-zinc-300 px-4 py-2 pl-8"
           />
           <LuSearch className="absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 stroke-zinc-500" />
         </form>
