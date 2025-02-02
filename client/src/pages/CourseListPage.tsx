@@ -3,11 +3,13 @@ import useFetch from "../hooks/useFetch";
 import { useSearchParams } from "react-router-dom";
 import CourseCard, { CourseType } from "../components/CourseCard";
 import CourseCardWireframe from "../components/CourseCardWireframe";
+import Filter from "../components/Filter";
+import Paginator from "../components/Paginator";
 
 export default function CourseListPage() {
   const [showFilter, setShowFilter] = useState(true);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const query = searchParams.get("query");
   const page = searchParams.get("page");
@@ -20,16 +22,20 @@ export default function CourseListPage() {
 
   useEffect(() => {
     fetchData();
-  }, [query]);
+  }, [query, page]);
 
+  function gotoPage(page: number) {
+    searchParams.set("page", page.toString());
+    setSearchParams(searchParams);
+  }
+
+  const totalPages = resData?.totalPages || 1;
   const totalResults = resData?.totalCourses || 0;
   const courses = data as CourseType[];
 
   return (
     <div className="mx-auto flex w-9/10 max-w-7xl py-8">
-      <div
-        className={`rounded-md border-zinc-300 duration-300 ease-linear ${showFilter ? "mr-4 w-72 border p-4" : "w-0"}`}
-      ></div>
+      <Filter showFilter={showFilter} />
       <div className="flex min-w-60 flex-1 flex-col gap-4">
         <div className="flex justify-between gap-4">
           <h1 className="text-lg font-medium">
@@ -61,6 +67,11 @@ export default function CourseListPage() {
                 <CourseCard course={course} key={course._id} />
               ))}
         </div>
+        <Paginator
+          gotoPage={gotoPage}
+          page={Number(page)}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

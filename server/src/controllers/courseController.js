@@ -18,7 +18,10 @@ export async function getAllCourses(req, res) {
 export async function searchCourses(req, res) {
   try {
     const { query, page } = req.query;
-    const options = query ? { title: { $regex: query, $options: "i" } } : {};
+    const options =
+      query && query !== "null" && query !== "undefined"
+        ? { title: { $regex: query, $options: "i" } }
+        : {};
     const limit = 12;
     const skip = (page - 1) * limit;
     const paginatedCourses = await Course.find(options).skip(skip).limit(limit);
