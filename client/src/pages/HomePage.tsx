@@ -1,6 +1,7 @@
 import CategoriesSection from "../components/CategoriesSection";
 import Hero from "../components/Hero";
 import PopularCoursesSection from "../components/PopularCoursesSection";
+import StatsSection from "../components/StatsSection";
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       <Hero />
       <div className="mx-auto flex w-9/10 max-w-7xl flex-col gap-16">
         <PopularCoursesSection />
+        <StatsSection />
         <CategoriesSection />
       </div>
     </div>
