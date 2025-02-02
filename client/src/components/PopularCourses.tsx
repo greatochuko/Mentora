@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CourseCard, { CourseType } from "./CourseCard";
+import { PiCaretLeftBold, PiCaretRightBold } from "react-icons/pi";
 
 const popularCourses: CourseType[] = [
   {
@@ -124,6 +125,26 @@ const popularCategories = Array.from(
 export default function PopularCourses() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
+  const courseGalleryRef = useRef<HTMLDivElement>(null);
+
+  function handleScrollRight() {
+    if (!courseGalleryRef.current) return;
+
+    courseGalleryRef.current.scrollBy({
+      left: 240,
+      behavior: "smooth",
+    });
+  }
+
+  function handleScrollLeft() {
+    if (!courseGalleryRef.current) return;
+
+    courseGalleryRef.current.scrollBy({
+      left: -240,
+      behavior: "smooth",
+    });
+  }
+
   const filteredCourses =
     selectedCategory === "All"
       ? popularCourses
@@ -154,15 +175,31 @@ export default function PopularCourses() {
         ))}
       </ul>
 
-      {/* <div className="grid w-full grid-cols-[repeat(auto-fill,_minmax(14rem,_1fr))] gap-4 md:grid-cols-3 lg:grid-cols-4"> */}
-      <div className="no-scrollbar grid w-full snap-x snap-mandatory grid-flow-col gap-4 overflow-x-auto">
-        {filteredCourses.map((course) => (
-          <CourseCard
-            course={course}
-            key={course._id}
-            className="w-60 snap-start snap-always sm:w-64"
-          />
-        ))}
+      <div className="relative w-full">
+        <div
+          ref={courseGalleryRef}
+          className="no-scrollbar grid w-full snap-x snap-mandatory grid-flow-col gap-4 overflow-x-auto"
+        >
+          {filteredCourses.map((course) => (
+            <CourseCard
+              course={course}
+              key={course._id}
+              className="w-60 snap-start snap-always sm:w-64"
+            />
+          ))}
+        </div>
+        <button
+          onClick={handleScrollLeft}
+          className="absolute top-1/2 left-0 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-300 bg-white p-2 duration-200 hover:shadow"
+        >
+          <PiCaretLeftBold />
+        </button>
+        <button
+          onClick={handleScrollRight}
+          className="absolute top-1/2 right-0 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-zinc-300 bg-white p-2 duration-200 hover:shadow"
+        >
+          <PiCaretRightBold />
+        </button>
       </div>
     </div>
   );
