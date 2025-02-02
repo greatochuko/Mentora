@@ -6,7 +6,7 @@ import StatsSection from "../components/StatsSection";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-16 pb-80">
+    <div className="flex flex-col gap-16">
       <Hero />
       <div className="mx-auto flex w-9/10 max-w-7xl flex-col gap-16">
         <PopularCoursesSection />

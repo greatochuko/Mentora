@@ -168,13 +168,13 @@ export default function ReviewsSection() {
           onClick={handleScrollLeft}
           className="absolute top-1/2 left-0 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-200 bg-white p-2 shadow-md duration-200 hover:bg-zinc-100"
         >
-          <PiCaretLeftBold className="h-6 w-6" />
+          <PiCaretLeftBold className="h-4 w-4 sm:h-6 sm:w-6" />
         </button>
         <button
           onClick={handleScrollRight}
           className="absolute top-1/2 right-0 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-zinc-200 bg-white p-2 shadow-md duration-200 hover:bg-zinc-100"
         >
-          <PiCaretRightBold className="h-6 w-6" />
+          <PiCaretRightBold className="h-4 w-4 sm:h-6 sm:w-6" />
         </button>
       </div>
     </div>
