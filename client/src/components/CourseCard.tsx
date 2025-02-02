@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export type CourseType = {
@@ -7,6 +8,8 @@ export type CourseType = {
   thumbnail: string;
   price: number;
   category: string;
+  rating: number;
+  numberOfReviews: number;
 };
 
 export default function CourseCard({
@@ -16,11 +19,11 @@ export default function CourseCard({
   course: CourseType;
   className: string;
 }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const priceInDollars = (course.price / 100).toFixed(2);
   const wholePrice = priceInDollars.toString().split(".")[0];
   const centPrice = priceInDollars.toString().split(".")[1];
-
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <div
@@ -45,6 +48,10 @@ export default function CourseCard({
         >
           {course.title}
         </Link>
+        <p className="flex items-center gap-1 text-amber-500">
+          {course.rating} <FaStar className="h-4 w-4 fill-amber-500" />
+          <span className="text-zinc-500">({course.numberOfReviews})</span>
+        </p>
         <div className="mt-auto flex items-center justify-between">
           <p>
             ${wholePrice} <sup>{centPrice}</sup>

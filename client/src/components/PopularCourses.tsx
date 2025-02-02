@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CourseCard, { CourseType } from "./CourseCard";
 import { PiCaretLeftBold, PiCaretRightBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 const popularCourses: CourseType[] = [
   {
@@ -10,6 +11,8 @@ const popularCourses: CourseType[] = [
       "https://media.licdn.com/dms/image/D5612AQFA87_WBhXUlg/article-cover_image-shrink_720_1280/0/1710942285800?e=2147483647&v=beta&t=Jgm-T4GK9bAhxW1E5AYUFn5JFK3Oj1mXmilUbw9kBcg",
     price: 2599,
     category: "Web Development",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "2",
@@ -17,6 +20,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/react-next.jpg",
     price: 1899,
     category: "Web Development",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "3",
@@ -24,6 +29,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/node-express.jpg",
     price: 2099,
     category: "Web Development",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "4",
@@ -31,6 +38,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/javascript.jpg",
     price: 1599,
     category: "Web Development",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "5",
@@ -38,6 +47,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/uiux-beginners.jpg",
     price: 1899,
     category: "UI/UX",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "6",
@@ -45,6 +56,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/figma-prototyping.jpg",
     price: 2299,
     category: "UI/UX",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "7",
@@ -52,6 +65,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/user-research.jpg",
     price: 2099,
     category: "UI/UX",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "8",
@@ -59,6 +74,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/design-systems.jpg",
     price: 2199,
     category: "UI/UX",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "9",
@@ -66,6 +83,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/conversion-copywriting.jpg",
     price: 1799,
     category: "Copywriting",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "10",
@@ -73,6 +92,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/seo-content.jpg",
     price: 1699,
     category: "Copywriting",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "11",
@@ -80,6 +101,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/email-copywriting.jpg",
     price: 1999,
     category: "Copywriting",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "12",
@@ -87,6 +110,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/brand-storytelling.jpg",
     price: 2099,
     category: "Copywriting",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "13",
@@ -94,6 +119,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/entrepreneurship.jpg",
     price: 2599,
     category: "Business",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "14",
@@ -101,6 +128,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/digital-marketing.jpg",
     price: 2399,
     category: "Business",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "15",
@@ -108,6 +137,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/ecommerce.jpg",
     price: 2499,
     category: "Business",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
   {
     _id: "16",
@@ -115,6 +146,8 @@ const popularCourses: CourseType[] = [
     thumbnail: "https://example.com/financial-planning.jpg",
     price: 2299,
     category: "Business",
+    rating: 4.6,
+    numberOfReviews: 125,
   },
 ];
 
@@ -127,10 +160,12 @@ export default function PopularCourses() {
 
   const courseGalleryRef = useRef<HTMLDivElement>(null);
 
-  function handleScrollRight() {
-    if (!courseGalleryRef.current) return;
+  useEffect(() => {
+    courseGalleryRef.current?.scroll({ left: 0 });
+  }, [selectedCategory]);
 
-    courseGalleryRef.current.scrollBy({
+  function handleScrollRight() {
+    courseGalleryRef.current?.scrollBy({
       left: 240,
       behavior: "smooth",
     });
@@ -151,7 +186,7 @@ export default function PopularCourses() {
       : popularCourses.filter((course) => course.category === selectedCategory);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-8">
       <h2 className="text-xl font-medium sm:text-2xl md:text-3xl">
         Our Popular Courses
       </h2>
@@ -159,7 +194,7 @@ export default function PopularCourses() {
         <li
           onClick={() => setSelectedCategory("All")}
           role="button"
-          className={`cursor-pointer rounded-full border p-1 px-3 text-sm font-medium whitespace-nowrap duration-200 hover:bg-zinc-50 ${selectedCategory === "All" ? "border-zinc-300 bg-zinc-100" : "border-zinc-200 text-zinc-500"}`}
+          className={`cursor-pointer rounded-full border p-1 px-3 text-sm font-medium whitespace-nowrap duration-200 ${selectedCategory === "All" ? "border-zinc-300 bg-blue-500 text-white hover:bg-blue-600" : "border-zinc-200 text-zinc-500 hover:bg-zinc-100"}`}
         >
           {"All"}
         </li>
@@ -168,7 +203,7 @@ export default function PopularCourses() {
             key={cat}
             onClick={() => setSelectedCategory(cat)}
             role="button"
-            className={`cursor-pointer rounded-full border border-zinc-200 p-1 px-3 text-sm font-medium whitespace-nowrap duration-200 hover:bg-zinc-50 ${selectedCategory === cat ? "bg-zinc-100" : "text-zinc-500"}`}
+            className={`cursor-pointer rounded-full border p-1 px-3 text-sm font-medium whitespace-nowrap duration-200 ${selectedCategory === cat ? "border-zinc-300 bg-blue-500 text-white hover:bg-blue-600" : "border-zinc-200 text-zinc-500 hover:bg-zinc-100"}`}
           >
             {cat}
           </li>
@@ -178,29 +213,39 @@ export default function PopularCourses() {
       <div className="relative w-full">
         <div
           ref={courseGalleryRef}
-          className="no-scrollbar grid w-full snap-x snap-mandatory grid-flow-col gap-4 overflow-x-auto"
+          className="no-scrollbar flex w-full snap-x snap-mandatory grid-flow-col gap-4 overflow-x-auto"
         >
           {filteredCourses.map((course) => (
             <CourseCard
               course={course}
               key={course._id}
-              className="w-60 snap-start snap-always sm:w-64"
+              className="min-w-60 flex-1 snap-start snap-always sm:min-w-64"
             />
           ))}
         </div>
         <button
           onClick={handleScrollLeft}
-          className="absolute top-1/2 left-0 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-300 bg-white p-2 duration-200 hover:shadow"
+          className="absolute top-1/2 left-0 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-200 bg-white p-2 shadow-md duration-200 hover:bg-zinc-100"
         >
-          <PiCaretLeftBold />
+          <PiCaretLeftBold className="h-6 w-6" />
         </button>
         <button
           onClick={handleScrollRight}
-          className="absolute top-1/2 right-0 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-zinc-300 bg-white p-2 duration-200 hover:shadow"
+          className="absolute top-1/2 right-0 z-20 -translate-y-1/2 translate-x-1/2 rounded-full border border-zinc-200 bg-white p-2 shadow-md duration-200 hover:bg-zinc-100"
         >
-          <PiCaretRightBold />
+          <PiCaretRightBold className="h-6 w-6" />
         </button>
       </div>
+      <Link
+        to={
+          selectedCategory === "All"
+            ? "/courses"
+            : `/courses?cat=${encodeURIComponent(selectedCategory)}`
+        }
+        className="rounded-full bg-zinc-800 px-4 py-2 text-sm text-white duration-200 hover:bg-zinc-900"
+      >
+        See All
+      </Link>
     </div>
   );
 }
