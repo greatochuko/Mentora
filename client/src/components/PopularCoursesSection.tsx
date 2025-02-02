@@ -155,7 +155,7 @@ const popularCategories = Array.from(
   new Set(popularCourses.map((course) => course.category)),
 );
 
-export default function PopularCourses() {
+export default function PopularCoursesSection() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const courseGalleryRef = useRef<HTMLDivElement>(null);
