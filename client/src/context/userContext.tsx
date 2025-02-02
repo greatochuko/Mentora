@@ -27,10 +27,10 @@ export default function UserProvider({
   children: React.ReactNode;
 }) {
   const [user, setUser] = useState<UserType | null>(null);
-  const [loadingSession, setLoadingSession] = useState(true);
 
-  const { fetchData } = useFetch({
+  const { fetchData, loading } = useFetch({
     url: "/auth/session",
+    startLoading: true,
     onSuccess(result) {
       setUser(result.data);
     },
@@ -38,9 +38,7 @@ export default function UserProvider({
 
   useEffect(() => {
     async function getSession() {
-      setLoadingSession(true);
       await fetchData();
-      setLoadingSession(false);
     }
 
     getSession();
@@ -51,7 +49,7 @@ export default function UserProvider({
   }
 
   return (
-    <userContext.Provider value={{ user, loadingSession, updateUser }}>
+    <userContext.Provider value={{ user, loadingSession: loading, updateUser }}>
       {children}
     </userContext.Provider>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { ReviewType } from "./ReviewCard";
 
 export type CourseType = {
   _id: string;
@@ -8,8 +9,9 @@ export type CourseType = {
   thumbnail: string;
   price: number;
   category: string;
-  rating: number;
-  numberOfReviews: number;
+  reviews: ReviewType[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 export default function CourseCard({
@@ -24,6 +26,10 @@ export default function CourseCard({
   const priceInDollars = (course.price / 100).toFixed(2);
   const wholePrice = priceInDollars.toString().split(".")[0];
   const centPrice = priceInDollars.toString().split(".")[1];
+
+  const courseRating =
+    course.reviews.reduce((acc, curr) => acc + curr.rating, 0) /
+    course.reviews.length;
 
   return (
     <div
@@ -49,14 +55,16 @@ export default function CourseCard({
           {course.title}
         </Link>
         <p className="flex items-center gap-1 text-amber-500">
-          {course.rating} <FaStar className="h-4 w-4 fill-amber-500" />
-          <span className="text-zinc-500">({course.numberOfReviews})</span>
+          {courseRating || 0} <FaStar className="h-4 w-4 fill-amber-500" />
+          <span className="text-zinc-500">
+            ({course.reviews.length || "No reviews yet"})
+          </span>
         </p>
         <div className="mt-auto flex items-center justify-between">
           <p>
             ${wholePrice} <sup>{centPrice}</sup>
           </p>
-          <button className="rounded-full bg-blue-500 px-4 py-2 text-sm font-medium text-white duration-200 hover:bg-blue-600">
+          <button className="rounded-full bg-blue-500 px-3 py-1.5 text-sm font-medium text-white duration-200 hover:bg-blue-600">
             Enroll Now
           </button>
         </div>

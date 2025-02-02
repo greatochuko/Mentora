@@ -7,36 +7,41 @@ export default function useFetch({
   onSuccess,
   onFailure,
   onComplete,
+  startLoading = false,
+  initialData,
 }: {
   url: string;
   body?: Record<string, any>;
   method?: "GET" | "POST" | "PUT" | "DELETE";
   onSuccess?: (result: any) => void;
   onFailure?: (errorMessage: string) => void;
-  onComplete?: () => void;
+  onComplete?: (result: any) => void;
+  startLoading?: boolean;
+  initialData?: any;
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(startLoading);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState();
+  const [data, setData] = useState(initialData);
 
   const fetchData = async () => {
     setLoading(true);
     setError(null);
+    let result;
     try {
-      const response = await fetch(`http://localhost:5000/api/v1${url}`, {
+      const response = await fetch(`http://192.168.43.73:5000/api/v1${url}`, {
         method: method || body ? "POST" : "GET",
         body: body ? JSON.stringify(body) : undefined,
         headers: { "Content-Type": "Application/json" },
         credentials: "include",
       });
 
-      const result = await response.json();
+      result = await response.json();
 
       if (!response.ok) {
         throw new Error(result.message);
       }
 
-      setData(result);
+      setData(result.data);
       onSuccess && onSuccess(result);
     } catch (err) {
       const errorMessage = (err as Error).message;
@@ -44,7 +49,7 @@ export default function useFetch({
       onFailure && onFailure(errorMessage);
     } finally {
       setLoading(false);
-      onComplete && onComplete();
+      onComplete && onComplete(result);
     }
   };
 
