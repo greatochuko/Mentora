@@ -46,12 +46,14 @@ export default function UserDropdown({ user }: { user: UserType }) {
             height={28}
             className="overflow-hidden rounded-full"
           />
-          <span>{user.firstName}</span>
-          {dropdownOpen ? (
-            <RxCaretUp className="h-5 w-5" />
-          ) : (
-            <RxCaretDown className="h-5 w-5" />
-          )}
+          <div className="hidden items-center gap-1 sm:flex">
+            <span>{user.firstName}</span>
+            {dropdownOpen ? (
+              <RxCaretUp className="h-5 w-5" />
+            ) : (
+              <RxCaretDown className="h-5 w-5" />
+            )}
+          </div>
         </button>
         <div
           className={`absolute top-[120%] right-0 z-20 flex w-32 flex-col rounded-md border border-zinc-100 bg-white p-2 shadow duration-100 ${dropdownOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"}`}
