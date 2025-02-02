@@ -17,7 +17,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "2",
     title: "Mastering React and Next.js",
-    thumbnail: "https://example.com/react-next.jpg",
+    thumbnail:
+      "https://media.licdn.com/dms/image/v2/D4E12AQEIqlkU8NSvJg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1692105491054?e=2147483647&v=beta&t=TmE4P7hBwEMLC-PROEmExcWzuVy4S4mAvZulxTqr5d4",
     price: 1899,
     category: "Web Development",
     rating: 4.6,
@@ -26,7 +27,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "3",
     title: "Node.js & Express Backend Development",
-    thumbnail: "https://example.com/node-express.jpg",
+    thumbnail:
+      "https://images.ctfassets.net/aq13lwl6616q/7cS8gBoWulxkWNWEm0FspJ/c7eb42dd82e27279307f8b9fc9b136fa/nodejs_cover_photo_smaller_size.png",
     price: 2099,
     category: "Web Development",
     rating: 4.6,
@@ -35,7 +37,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "4",
     title: "Modern JavaScript (ES6+)",
-    thumbnail: "https://example.com/javascript.jpg",
+    thumbnail:
+      "https://media2.dev.to/dynamic/image/width=1600,height=900,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fi%2F398a310kjdiv647cld1y.jpg",
     price: 1599,
     category: "Web Development",
     rating: 4.6,
@@ -44,7 +47,7 @@ const popularCourses: CourseType[] = [
   {
     _id: "5",
     title: "UI/UX Design for Beginners",
-    thumbnail: "https://example.com/uiux-beginners.jpg",
+    thumbnail: "https://i.ytimg.com/vi/N-xuqy6x1Bw/maxresdefault.jpg",
     price: 1899,
     category: "UI/UX",
     rating: 4.6,
@@ -53,7 +56,7 @@ const popularCourses: CourseType[] = [
   {
     _id: "6",
     title: "Advanced Figma & Prototyping",
-    thumbnail: "https://example.com/figma-prototyping.jpg",
+    thumbnail: "https://i.ytimg.com/vi/Tx45NcbU6aA/maxresdefault.jpg",
     price: 2299,
     category: "UI/UX",
     rating: 4.6,
@@ -62,7 +65,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "7",
     title: "User Research & Usability Testing",
-    thumbnail: "https://example.com/user-research.jpg",
+    thumbnail:
+      "https://media.nngroup.com/media/courses/opengraph_images/Course_UsabilityTesting.jpg",
     price: 2099,
     category: "UI/UX",
     rating: 4.6,
@@ -71,7 +75,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "8",
     title: "Design Systems & UI Components",
-    thumbnail: "https://example.com/design-systems.jpg",
+    thumbnail:
+      "https://bs-uploads.toptal.io/blackfish-uploads/components/open_graph_image/8958602/og_image/optimized/design-system-68829a95a7e98aca4395388953988fd4.png",
     price: 2199,
     category: "UI/UX",
     rating: 4.6,
@@ -80,7 +85,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "9",
     title: "Copywriting for Conversions",
-    thumbnail: "https://example.com/conversion-copywriting.jpg",
+    thumbnail:
+      "https://copyschool.co/wp-content/uploads/2022/10/Thumbnail_CC4B_3.png",
     price: 1799,
     category: "Copywriting",
     rating: 4.6,
@@ -89,7 +95,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "10",
     title: "SEO Content Writing Masterclass",
-    thumbnail: "https://example.com/seo-content.jpg",
+    thumbnail:
+      "https://marketing-assets.surferseo.art/wf-cdn/5e09dd04ad6bad1923bf1aae/61dc6a53715b2ac1830e462d_SEO%20WM%202%20OG.jpg",
     price: 1699,
     category: "Copywriting",
     rating: 4.6,
@@ -98,7 +105,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "11",
     title: "Email Marketing Copywriting",
-    thumbnail: "https://example.com/email-copywriting.jpg",
+    thumbnail:
+      "https://moosend.com/wp-content/uploads/2020/08/email_copywriting.png",
     price: 1999,
     category: "Copywriting",
     rating: 4.6,
@@ -107,7 +115,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "12",
     title: "Brand Storytelling & Messaging",
-    thumbnail: "https://example.com/brand-storytelling.jpg",
+    thumbnail:
+      "https://images.ctfassets.net/wshh1v3ruvt9/3TIUjOXg6U4Y9xKTExIuNs/c9b6817c96b7f472bb059e94d6c34d93/BrStorytellin_GuideArtboard_76_copy_28_2x.png",
     price: 2099,
     category: "Copywriting",
     rating: 4.6,
@@ -116,7 +125,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "13",
     title: "Entrepreneurship & Business Strategy",
-    thumbnail: "https://example.com/entrepreneurship.jpg",
+    thumbnail:
+      "https://media.licdn.com/dms/image/C4E12AQFglOI1zvy5xQ/article-cover_image-shrink_720_1280/0/1649309350200?e=2147483647&v=beta&t=JsqSiCbpT_u-U_wwP2UcVANIbtq7UqhleZt44jlqRdU",
     price: 2599,
     category: "Business",
     rating: 4.6,
@@ -125,7 +135,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "14",
     title: "Digital Marketing & Growth Hacking",
-    thumbnail: "https://example.com/digital-marketing.jpg",
+    thumbnail:
+      "https://growthmaster.com/wp-content/uploads/2024/03/growth-hacking.jpeg",
     price: 2399,
     category: "Business",
     rating: 4.6,
@@ -134,7 +145,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "15",
     title: "E-commerce & Dropshipping Mastery",
-    thumbnail: "https://example.com/ecommerce.jpg",
+    thumbnail:
+      "https://merchize.com/wp-content/uploads/2024/10/Blue-and-Beige-Minimalist-Baby-Tips-Youtube-Thumbnail-10.png",
     price: 2499,
     category: "Business",
     rating: 4.6,
@@ -143,7 +155,8 @@ const popularCourses: CourseType[] = [
   {
     _id: "16",
     title: "Financial Planning for Startups",
-    thumbnail: "https://example.com/financial-planning.jpg",
+    thumbnail:
+      "https://www.pw.live/exams/wp-content/uploads/2024/07/Financial-Planning-for-Startups.jpg",
     price: 2299,
     category: "Business",
     rating: 4.6,
@@ -219,7 +232,7 @@ export default function PopularCoursesSection() {
             <CourseCard
               course={course}
               key={course._id}
-              className="min-w-60 flex-1 snap-start snap-always sm:min-w-64"
+              className="min-w-60 flex-1 snap-start sm:min-w-64"
             />
           ))}
         </div>
