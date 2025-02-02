@@ -6,11 +6,15 @@ import RegisterPage from "./pages/RegisterPage";
 import AppLayout from "./components/AppLayout";
 import AuthLayout from "./components/AuthLayout";
 import UserProvider from "./context/userContext";
+import CourseListPage from "./pages/CourseListPage";
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
-    children: [{ index: true, element: <HomePage /> }],
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: "/courses", element: <CourseListPage /> },
+    ],
   },
   {
     element: <AuthGuard />,

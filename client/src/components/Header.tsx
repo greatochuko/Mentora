@@ -1,5 +1,5 @@
 import { LuSearch } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import UserDropdown from "./UserDropdown";
 import { useState } from "react";
@@ -9,8 +9,11 @@ export default function Header() {
 
   const { user, loadingSession } = useUserContext();
 
+  const navigate = useNavigate();
+
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
+    navigate(`/courses?query=${searchQuery}`);
   }
 
   return (

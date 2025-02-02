@@ -19,7 +19,7 @@ export default function CourseCard({
   className,
 }: {
   course: CourseType;
-  className: string;
+  className?: string;
 }) {
   const [imageLoaded, setImageLoaded] = useState(false);
 

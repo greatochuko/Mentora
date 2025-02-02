@@ -1,5 +1,14 @@
 import { useState } from "react";
 
+type ResDataType = {
+  message: string;
+  success: boolean;
+  data: any;
+  page: number;
+  totalPages: number;
+  totalCourses: any;
+};
+
 export default function useFetch({
   url,
   body,
@@ -22,6 +31,7 @@ export default function useFetch({
   const [loading, setLoading] = useState(startLoading);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState(initialData);
+  const [resData, setResData] = useState<ResDataType>();
 
   const fetchData = async () => {
     setLoading(true);
@@ -45,6 +55,7 @@ export default function useFetch({
       }
 
       setData(result.data);
+      setResData(result);
       onSuccess && onSuccess(result);
     } catch (err) {
       const errorMessage = (err as Error).message;
@@ -56,5 +67,5 @@ export default function useFetch({
     }
   };
 
-  return { fetchData, loading, error, data };
+  return { fetchData, loading, error, data, resData };
 }

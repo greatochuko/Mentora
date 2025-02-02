@@ -3,12 +3,38 @@ import Course from "../models/Course.js";
 export async function getAllCourses(req, res) {
   try {
     const allCourses = await Course.find();
+
     res.status(200).json({
       message: "Courses retrieved successfully",
       success: true,
-      data: allCourses,
+      data: paginatedCourses,
     });
   } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export async function searchCourses(req, res) {
+  try {
+    const { query, page } = req.query;
+    const options = query ? { title: { $regex: query, $options: "i" } } : {};
+    const limit = 12;
+    const skip = (page - 1) * limit;
+    const paginatedCourses = await Course.find(options).skip(skip).limit(limit);
+    const totalCourses = await Course.countDocuments(options);
+    const totalPages = Math.ceil(totalCourses / limit);
+
+    res.status(200).json({
+      message: "Courses retrieved successfully",
+      success: true,
+      data: paginatedCourses,
+      page: page,
+      totalPages,
+      totalCourses,
+    });
+  } catch (error) {
+    console.log(error.message);
     res.status(500).json({ message: error.message });
   }
 }
