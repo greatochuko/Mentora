@@ -17,14 +17,17 @@ export async function getAllCourses(req, res) {
 
 export async function searchCourses(req, res) {
   try {
-    const { query, page } = req.query;
+    const { query, page, sort } = req.query;
     const options =
       query && query !== "null" && query !== "undefined"
         ? { title: { $regex: query, $options: "i" } }
         : {};
     const limit = 12;
     const skip = (page - 1) * limit;
-    const paginatedCourses = await Course.find(options).skip(skip).limit(limit);
+    const paginatedCourses = await Course.find(options)
+      .sort({ createdAt: sort === "oldest" ? 1 : -1 })
+      .skip(skip)
+      .limit(limit);
     const totalCourses = await Course.countDocuments(options);
     const totalPages = Math.ceil(totalCourses / limit);
 
@@ -37,7 +40,6 @@ export async function searchCourses(req, res) {
       totalCourses,
     });
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ message: error.message });
   }
 }

@@ -8,6 +8,7 @@ import Paginator from "../components/Paginator";
 
 export default function CourseListPage() {
   const [showFilter, setShowFilter] = useState(true);
+  const [sortBy, setSortBy] = useState<string>();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -15,14 +16,14 @@ export default function CourseListPage() {
   const page = searchParams.get("page");
 
   const { fetchData, loading, data, resData } = useFetch({
-    url: `/courses/search?query=${query}&page=${page}`,
+    url: `/courses/search?query=${query}&page=${page}&sort=${sortBy}`,
     startLoading: true,
     initialData: [],
   });
 
   useEffect(() => {
     fetchData();
-  }, [query, page]);
+  }, [query, page, sortBy]);
 
   function gotoPage(page: number) {
     searchParams.set("page", page.toString());
@@ -45,11 +46,17 @@ export default function CourseListPage() {
           <select
             name="sort"
             id="sort"
-            className="ml-auto rounded-md border border-zinc-300 px-3 py-1.5 text-sm duration-200 hover:bg-zinc-100"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="ml-auto rounded-md border border-zinc-300 px-3 py-1.5 text-sm duration-200"
           >
-            <option hidden>Sort By</option>
-            <option value={"newest"}>Newest first</option>
-            <option value={"oldest"}>Oldest first</option>
+            <option value={"default"}>Sort By</option>
+            <option value={"newest"} className="hover:bg-blue-500">
+              Newest first
+            </option>
+            <option value={"oldest"} className="hover:bg-blue-500">
+              Oldest first
+            </option>
           </select>
           <button
             onClick={() => setShowFilter((prev) => !prev)}
