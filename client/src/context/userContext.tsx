@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 
 export type UserType = {
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;

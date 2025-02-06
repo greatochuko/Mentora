@@ -5,7 +5,14 @@ const CourseSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      trim: true,
+    },
+    subtitle: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
     },
     thumbnail: {
       type: String,
@@ -23,6 +30,7 @@ const CourseSchema = new mongoose.Schema(
       type: [mongoose.SchemaTypes.ObjectId],
       default: [],
     },
+    user: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

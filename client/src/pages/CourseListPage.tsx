@@ -36,7 +36,7 @@ export default function CourseListPage() {
   const courses = data as CourseType[];
 
   return (
-    <div className="mx-auto flex w-9/10 max-w-7xl py-8">
+    <main className="mx-auto flex w-9/10 max-w-7xl flex-1 py-8">
       <Filter
         showFilter={showFilter}
         closeFilter={() => setShowFilter(false)}
@@ -88,6 +88,6 @@ export default function CourseListPage() {
           totalPages={totalPages}
         />
       </div>
-    </div>
+    </main>
   );
 }

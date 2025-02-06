@@ -7,6 +7,8 @@ import AppLayout from "./components/AppLayout";
 import AuthLayout from "./components/AuthLayout";
 import UserProvider from "./context/userContext";
 import CourseListPage from "./pages/CourseListPage";
+import CourseDetailsPage from "./pages/CourseDetailsPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +16,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "/courses", element: <CourseListPage /> },
+      { path: "/courses/:courseId", element: <CourseDetailsPage /> },
+      { path: "*", element: <NotFoundPage /> },
     ],
   },
   {

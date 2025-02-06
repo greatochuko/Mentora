@@ -16,7 +16,7 @@ export default function CourseCardWireframe({
         <div className="flex items-center justify-between">
           <div className="h-4 w-16 animate-pulse rounded-md bg-zinc-300"></div>
           <button className="rounded-full bg-blue-500 px-3 py-1.5 text-sm font-medium text-white duration-200 hover:bg-blue-600">
-            Enroll Now
+            Add to cart
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import Course from "../models/Course.js";
+import "../models/User.js";
 
 export async function getAllCourses(req, res) {
   try {
@@ -7,7 +8,7 @@ export async function getAllCourses(req, res) {
     res.status(200).json({
       message: "Courses retrieved successfully",
       success: true,
-      data: paginatedCourses,
+      data: allCourses,
     });
   } catch (error) {
     console.log(error.message);
@@ -50,9 +51,38 @@ export async function getPopularCourses(req, res) {
     res.status(200).json({
       message: "Courses retrieved successfully",
       success: true,
-      data: allCourses,
+      data: allCourses.slice(0, 8),
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res
+      .status(500)
+      .json({ success: false, data: null, message: error.message });
+  }
+}
+
+export async function getCourse(req, res) {
+  try {
+    const { courseId } = req.params;
+    const course = await Course.findById(courseId).populate({
+      path: "user",
+      populate: "firstName lastName profilePicture",
+    });
+
+    if (!course)
+      res.status(404).json({
+        message: "Courses not found",
+        success: false,
+        data: course,
+      });
+
+    res.status(200).json({
+      message: "Courses retrieved successfully",
+      success: true,
+      data: course,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, data: null, message: error.message });
   }
 }

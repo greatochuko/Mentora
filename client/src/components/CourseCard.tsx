@@ -2,14 +2,18 @@ import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { ReviewType } from "./ReviewCard";
+import { UserType } from "../context/userContext";
 
 export type CourseType = {
   _id: string;
   title: string;
+  subtitle: string;
+  description: string;
   thumbnail: string;
   price: number;
   category: string;
   reviews: ReviewType[];
+  user: UserType;
   createdAt: string;
   updatedAt: string;
 };
@@ -33,7 +37,7 @@ export default function CourseCard({
 
   return (
     <div
-      className={`group flex flex-col rounded-md border border-zinc-300 p-1.5 shadow ${className}`}
+      className={`group flex flex-col rounded-md border border-zinc-300 bg-white p-1.5 shadow ${className}`}
     >
       <div className="overflow-hidden rounded-sm">
         <div
@@ -65,7 +69,7 @@ export default function CourseCard({
             ${wholePrice} <sup>{centPrice}</sup>
           </p>
           <button className="rounded-full bg-blue-500 px-3 py-1.5 text-sm font-medium text-white duration-200 hover:bg-blue-600">
-            Enroll Now
+            Add to cart
           </button>
         </div>
       </div>
