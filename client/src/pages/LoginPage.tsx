@@ -4,6 +4,7 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useFetch from "../hooks/useFetch";
 import { useUserContext } from "../context/userContext";
+import { useCartContext } from "../context/cartContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { updateUser } = useUserContext();
+  const { syncCart } = useCartContext();
 
   const navigate = useNavigate();
 
@@ -19,6 +21,7 @@ export default function LoginPage() {
     body: { email, password },
     onSuccess(result) {
       updateUser(result.data);
+      syncCart();
       navigate("/", { replace: true });
     },
   });

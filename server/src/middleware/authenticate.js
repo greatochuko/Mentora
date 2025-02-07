@@ -19,7 +19,7 @@ export async function authenticate(req, res, next) {
         .json({ message: "Unauthorized", success: false, data: null });
     }
 
-    req.userId = user._id;
+    req.userId = user._id.toString();
 
     next();
   } catch (error) {

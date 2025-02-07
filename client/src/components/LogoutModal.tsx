@@ -1,15 +1,18 @@
+import { useCartContext } from "../context/cartContext";
 import { useUserContext } from "../context/userContext";
 import useFetch from "../hooks/useFetch";
 import LoadingIndicator from "./LoadingIndicator";
 
 export default function LogoutModal({ closeModal }: { closeModal(): void }) {
   const { updateUser } = useUserContext();
+  const { resetCart } = useCartContext();
 
   const { fetchData, loading } = useFetch({
     url: "/auth/logout",
     method: "POST",
-    onComplete() {
+    onSuccess() {
       updateUser(null);
+      resetCart();
     },
   });
 

@@ -12,11 +12,15 @@ const cartContext = createContext<{
   cartLoading: boolean;
   addItemToCart(course: CourseType): void;
   removeItemFromCart(courseId: string): void;
+  syncCart(): void;
+  resetCart(): void;
 }>({
   cartItems: [],
   cartLoading: true,
   addItemToCart: () => {},
   removeItemFromCart: () => {},
+  syncCart: () => {},
+  resetCart: () => {},
 });
 
 export default function CartProvider({
@@ -93,9 +97,51 @@ export default function CartProvider({
     }
   }
 
+  async function syncCart() {
+    const localStorageCart: CartItemType[] = JSON.parse(
+      localStorage.getItem("cart") || "[]",
+    );
+
+    try {
+      const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      if (!BASE_URL) return;
+      const res = await fetch(`${BASE_URL}/api/v1/cart/sync`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          courses: localStorageCart.map((item) => item.course._id),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      setCartItems(data.data);
+      localStorage.removeItem("cart");
+    } catch (err) {
+      const error = err as Error;
+      console.log(error.message);
+    }
+  }
+
+  function resetCart() {
+    const localStorageCart: CartItemType[] = JSON.parse(
+      localStorage.getItem("cart") || "[]",
+    );
+    setCartItems(localStorageCart);
+  }
+
   return (
     <cartContext.Provider
-      value={{ cartItems, cartLoading, addItemToCart, removeItemFromCart }}
+      value={{
+        cartItems,
+        cartLoading,
+        addItemToCart,
+        removeItemFromCart,
+        syncCart,
+        resetCart,
+      }}
     >
       {children}
     </cartContext.Provider>
