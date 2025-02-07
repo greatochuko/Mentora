@@ -10,6 +10,7 @@ import CourseListPage from "./pages/CourseListPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CartProvider from "./context/cartContext";
+import CartPage from "./pages/CartPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/courses", element: <CourseListPage /> },
       { path: "/courses/:courseId", element: <CourseDetailsPage /> },
+      { path: "/cart", element: <CartPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

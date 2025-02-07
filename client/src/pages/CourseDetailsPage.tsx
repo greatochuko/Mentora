@@ -5,6 +5,7 @@ import { CourseType } from "../components/CourseCard";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp, FaStar } from "react-icons/fa";
 import NotFoundPage from "./NotFoundPage";
+import { getCourseRating } from "../lib/utils";
 
 const courseContent = [
   {
@@ -153,9 +154,7 @@ export default function CourseDetailsPage() {
 
   if (!course) return <NotFoundPage />;
 
-  const courseRating =
-    course.reviews.reduce((acc, curr) => acc + curr.rating, 0) /
-    course.reviews.length;
+  const courseRating = getCourseRating(course);
 
   const priceInDollars = (course.price / 100).toFixed(2);
   const wholePrice = priceInDollars.toString().split(".")[0];

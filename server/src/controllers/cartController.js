@@ -4,7 +4,7 @@ export async function getCart(req, res) {
   try {
     const user = await User.findById(req.userId).populate({
       path: "cart",
-      populate: "course",
+      populate: { path: "course", populate: "user" },
     });
 
     res.status(200).json({
