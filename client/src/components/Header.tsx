@@ -28,7 +28,7 @@ export default function Header() {
               to={"/"}
               className="block rounded-md py-2 font-medium text-blue-600"
             >
-              FobeworkLMS
+              Mentora
             </Link>
           </li>
           <li className="hidden sm:block">

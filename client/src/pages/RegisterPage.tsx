@@ -50,7 +50,7 @@ export default function RegisterPage() {
     <div className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-8 p-8 text-sm">
       <div className="flex flex-col items-center justify-center gap-2">
         <Link to={"/"} className="text-base font-medium text-blue-600">
-          Fobework LMS
+          Mentora
         </Link>
         <h1 className="text-2xl font-medium sm:text-[1.75rem]">
           Create your account! 🚀

@@ -3,6 +3,7 @@ import { useCartContext } from "../context/cartContext";
 import { getCourseRating } from "../lib/utils";
 import { Link } from "react-router-dom";
 import LoadingScreen from "../components/LoadingScreen";
+import OrderDetails from "../components/OrderDetails";
 
 export default function CartPage() {
   const { cartItems, removeItemFromCart, cartLoading } = useCartContext();
@@ -58,19 +59,7 @@ export default function CartPage() {
           ))
         )}
       </div>
-      {cartItems.length > 0 && (
-        <div className="flex flex-col gap-4 lg:w-72">
-          <h1 className="text-lg font-medium sm:text-xl">Order Details</h1>
-          <div className="rounded-lg border border-zinc-200 p-4">
-            <p className="flex items-center justify-between">
-              Total Price: <span className="font-medium">${totalPrice}</span>
-            </p>
-          </div>
-          <button className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white duration-200 hover:bg-blue-600 sm:text-base">
-            Proceed to Checkout
-          </button>
-        </div>
-      )}
+      {cartItems.length > 0 && <OrderDetails totalPrice={totalPrice} />}
     </main>
   );
 }
