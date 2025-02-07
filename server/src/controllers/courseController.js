@@ -57,18 +57,18 @@ export async function searchCourses(req, res) {
 
 export async function getPopularCourses(req, res) {
   try {
-    const allCourses = await Course.find().sort({ "reviews.length": -1 });
-    res
-      .status(200)
-      .json({
-        message: "Courses retrieved successfully",
-        success: true,
-        data: allCourses.slice(0, 8),
-      })
+    const allCourses = await Course.find()
       .populate({
         path: "user",
         populate: "firstName lastName profilePicture",
-      });
+      })
+      .sort({ "reviews.length": -1 });
+
+    res.status(200).json({
+      message: "Courses retrieved successfully",
+      success: true,
+      data: allCourses.slice(0, 8),
+    });
   } catch (error) {
     res
       .status(500)
