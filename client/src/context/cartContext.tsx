@@ -33,6 +33,10 @@ export default function CartProvider({
     onSuccess(result) {
       setCartItems(result.data);
     },
+    onFailure() {
+      const localStorageCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      setCartItems(localStorageCart);
+    },
   });
 
   useEffect(() => {
@@ -57,6 +61,10 @@ export default function CartProvider({
         const error = err as Error;
         console.log(error.message);
       }
+    } else {
+      const localStorageCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      localStorageCart.push({ course });
+      localStorage.setItem("cart", JSON.stringify(localStorageCart));
     }
   }
 
@@ -74,6 +82,14 @@ export default function CartProvider({
         const error = err as Error;
         console.log(error.message);
       }
+    } else {
+      let localStorageCart: CartItemType[] = JSON.parse(
+        localStorage.getItem("cart") || "[]",
+      );
+      localStorageCart = localStorageCart.filter(
+        (item) => item.course._id !== courseId,
+      );
+      localStorage.setItem("cart", JSON.stringify(localStorageCart));
     }
   }
 
