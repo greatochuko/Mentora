@@ -16,7 +16,7 @@ export default function Hero() {
           Get world class courses from world class mentors
         </h3>
         <p className="text-sm text-zinc-200 sm:text-base sm:text-zinc-500">
-          Learn valuable, practical skills for as low as #7,500. Sale ends
+          Learn valuable, practical skills for as low as $7.50. Sale ends
           tomorrow!
         </p>
         <form onSubmit={handleSearch} className="relative max-w-60 flex-1">

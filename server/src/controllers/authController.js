@@ -131,7 +131,9 @@ export async function getSession(req, res) {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId).select(
+      "firstName lastName profilePicture"
+    );
     if (!user) {
       return res
         .status(401)

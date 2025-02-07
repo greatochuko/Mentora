@@ -26,6 +26,17 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: "/default-profile-picture.png",
     },
+    cart: {
+      type: [
+        {
+          course: {
+            type: mongoose.SchemaTypes.ObjectId,
+            default: [],
+            ref: "Course",
+          },
+        },
+      ],
+    },
   },
   { timestamps: true }
 );

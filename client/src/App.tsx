@@ -9,6 +9,7 @@ import UserProvider from "./context/userContext";
 import CourseListPage from "./pages/CourseListPage";
 import CourseDetailsPage from "./pages/CourseDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import CartProvider from "./context/cartContext";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,9 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <UserProvider>
-      <RouterProvider router={router} />
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
     </UserProvider>
   );
 }
