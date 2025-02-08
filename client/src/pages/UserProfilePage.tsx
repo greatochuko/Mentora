@@ -3,12 +3,14 @@ import { useUserContext } from "../context/userContext";
 import LoadingPage from "../components/LoadingPage";
 import { redirect } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
+import { uploadFile } from "../lib/utils";
 
 export default function UserProfilePage() {
   const { user, loadingSession, updateUser } = useUserContext();
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState(user?.firstName || "");
   const [lastName, setLastName] = useState(user?.lastName || "");
+  const [uploadingProfilePicture, setUploadingProfilePicture] = useState(false);
   const [profilePicture, setProfilePicture] = useState(
     user?.profilePicture || "",
   );
@@ -29,7 +31,7 @@ export default function UserProfilePage() {
       const res = await fetch(`${BASE_URL}/api/v1/user`, {
         method: "PATCH",
         headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify({ firstName, lastName }),
+        body: JSON.stringify({ firstName, lastName, profilePicture }),
         credentials: "include",
       });
       const data = await res.json();
@@ -45,10 +47,18 @@ export default function UserProfilePage() {
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
+
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePicture(reader.result as string);
+      reader.onloadend = async () => {
+        if (reader.result) {
+          setUploadingProfilePicture(true);
+          const { url } = await uploadFile(reader.result as string);
+          setUploadingProfilePicture(false);
+          if (url) {
+            setProfilePicture(url);
+          }
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -92,17 +102,22 @@ export default function UserProfilePage() {
             <img
               src={profilePicture}
               alt={`${firstName}'s profile picture`}
-              className="aspect-square w-full max-w-40 rounded-lg"
+              className="aspect-square w-full max-w-40 rounded-lg bg-zinc-100"
             />
             <label
               role="button"
               htmlFor="profile-picture"
-              className="max-w-40 cursor-pointer self-end rounded-md border border-zinc-300 px-4 py-2 text-center font-medium duration-200 hover:bg-zinc-100"
+              className="flex w-40 cursor-pointer items-center justify-center self-end rounded-md border border-zinc-300 px-4 py-2 text-center font-medium duration-200 hover:bg-zinc-100"
             >
-              Change Image
+              {uploadingProfilePicture ? (
+                <LoadingIndicator color="oklch(0.623 0.214 259.815)" />
+              ) : (
+                "Change Image"
+              )}
             </label>
           </div>
           <input
+            disabled={uploadingProfilePicture}
             type="file"
             name="profile-picture"
             id="profile-picture"

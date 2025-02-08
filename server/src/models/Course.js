@@ -27,15 +27,17 @@ const CourseSchema = new mongoose.Schema(
       default: [],
     },
     user: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
-    content: {
-      title: { type: String, required: true },
-      description: { type: String, required: true },
-      video: {
-        fileName: { type: String, required: true },
-        url: { type: String, required: true },
-        duration: { type: Number, required: true },
+    content: [
+      {
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        video: {
+          fileName: { type: String, required: true },
+          url: { type: String, required: true },
+          duration: { type: Number, required: true },
+        },
       },
-    },
+    ],
   },
   { timestamps: true }
 );

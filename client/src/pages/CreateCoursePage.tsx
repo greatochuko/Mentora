@@ -1,9 +1,23 @@
 import { useEffect, useState } from "react";
 import { CourseContentType, CourseType } from "../components/CourseCard";
 import useFetch from "../hooks/useFetch";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingPage from "../components/LoadingPage";
+import { uploadFile } from "../lib/utils";
+import LoadingIndicator from "../components/LoadingIndicator";
 
+const categories = [
+  "Business",
+  "Copywriting",
+  "UI/UX",
+  "Web Development",
+  "Marketing",
+  "Data Science",
+  "Cybersecurity",
+  "Graphic Design",
+  "Software Engineering",
+  "Product Management",
+];
 export default function CreateCoursePage() {
   const { courseId } = useParams();
 
@@ -16,6 +30,12 @@ export default function CreateCoursePage() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
+  const [category, setCategory] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [uploadingThumbnail, setUploadingThumbnail] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [creatingCourse, setCreatingCourse] = useState(false);
   const [chapters, setChapters] = useState<CourseContentType[]>([
     {
       title: "",
@@ -23,6 +43,8 @@ export default function CreateCoursePage() {
       video: { fileName: "", url: "", duration: 0 },
     },
   ]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!courseId) return;
@@ -77,10 +99,15 @@ export default function CreateCoursePage() {
       videoElement.src = videoUrl;
       videoElement.preload = "metadata";
 
-      videoElement.onloadedmetadata = () => {
+      videoElement.onloadedmetadata = async () => {
         const duration = videoElement.duration;
-        const video = { fileName: file.name, url: videoUrl, duration };
-        handleUpdateChapter(index, "video", video);
+        setUploadingVideo(true);
+        const { url } = await uploadFile(file);
+        setUploadingVideo(false);
+        if (url) {
+          const video = { fileName: file.name, url, duration };
+          handleUpdateChapter(index, "video", video);
+        }
       };
     }
   }
@@ -88,18 +115,63 @@ export default function CreateCoursePage() {
   const cannotSubmit =
     !title.trim() ||
     !description.trim() ||
+    !thumbnail ||
+    !category ||
     chapters.some(
       (chapter) =>
         !chapter.title.trim() ||
         !chapter.description.trim() ||
         !chapter.video.url,
-    );
+    ) ||
+    !price;
 
-  function handleCreateCourse(event: React.FormEvent) {
+  function handleChangeThumbnail(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        if (reader.result) {
+          setUploadingThumbnail(true);
+          const { url } = await uploadFile(reader.result as string);
+          setUploadingThumbnail(false);
+          if (url) {
+            setThumbnail(url);
+          }
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  async function handleCreateCourse(event: React.FormEvent) {
     event.preventDefault();
     if (cannotSubmit) return;
-
-    // Add logic to handle course creation
+    setCreatingCourse(true);
+    try {
+      const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      if (!BASE_URL) return;
+      const res = await fetch(`${BASE_URL}/api/v1/courses`, {
+        method: "POST",
+        headers: { "Content-Type": "Application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          title,
+          description,
+          thumbnail,
+          category,
+          price: price * 100,
+          content: chapters,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      navigate("/dashboard/courses");
+    } catch (err) {
+      const error = err as Error;
+      console.log(error.message);
+    }
+    setCreatingCourse(false);
   }
 
   function handleEditCourse() {}
@@ -134,6 +206,27 @@ export default function CreateCoursePage() {
             />
           </div>
           <div className="flex flex-col gap-2">
+            <label htmlFor="thumbnail">Course Thumbnail</label>
+            {thumbnail ? (
+              <img
+                src={thumbnail}
+                alt="course thumbnail"
+                className="aspect-video max-w-60 rounded-lg object-cover"
+              />
+            ) : (
+              <div className="aspect-video max-w-60 rounded-lg border border-zinc-300 bg-zinc-100"></div>
+            )}
+            <input
+              type="file"
+              id="thumbnail"
+              name="thumbnail"
+              accept="image/*"
+              disabled={uploadingThumbnail}
+              onChange={handleChangeThumbnail}
+              className="w-full rounded-md border border-zinc-300 p-2"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
             <label htmlFor="description">Course Description</label>
             <textarea
               id="description"
@@ -144,6 +237,25 @@ export default function CreateCoursePage() {
               placeholder="Write a little about this course"
               className="w-full rounded-md border border-zinc-300 p-2"
             ></textarea>
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="category">Category</label>
+            <select
+              id="category"
+              name="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full rounded-md border border-zinc-300 p-2"
+            >
+              <option value="" hidden>
+                Select a Category
+              </option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -196,7 +308,7 @@ export default function CreateCoursePage() {
                 <h4>Chapter Content</h4>
                 <label
                   htmlFor={`chapter-content-${index}`}
-                  className="cursor-pointer rounded-md border border-zinc-300 p-2 duration-200 hover:bg-zinc-100"
+                  className={`cursor-pointer rounded-md border border-zinc-300 p-2 duration-200 hover:bg-zinc-100 ${uploadingVideo ? "cursor-not-allowed bg-zinc-100 text-zinc-500" : ""}`}
                 >
                   {chapter.video.fileName || "Upload Video"}
                 </label>
@@ -204,6 +316,7 @@ export default function CreateCoursePage() {
                 <input
                   type="file"
                   hidden
+                  disabled={uploadingVideo}
                   onChange={(e) => handleUpdateChapterVideo(index, e)}
                   name={`chapter-content-${index}`}
                   id={`chapter-content-${index}`}
@@ -221,12 +334,32 @@ export default function CreateCoursePage() {
             Add Chapter
           </button>
         </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="price">Price</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={price}
+            onChange={(e) => setPrice(Number(e.target.value))}
+            placeholder="Enter the price for this course"
+            className="w-full rounded-md border border-zinc-300 p-2"
+          />
+        </div>
+
         <button
           type="submit"
-          disabled={cannotSubmit}
-          className="rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white duration-300 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-500/50"
+          disabled={cannotSubmit || creatingCourse}
+          className="flex items-center justify-center rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white duration-300 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-500/50"
         >
-          {courseId ? "Update" : "Create"} Course
+          {creatingCourse ? (
+            <LoadingIndicator />
+          ) : courseId ? (
+            "Update Course"
+          ) : (
+            "Create Course"
+          )}
         </button>
       </form>
     </div>

@@ -3,12 +3,13 @@ import Order from "../models/Order.js";
 
 export async function updateUser(req, res) {
   try {
-    const { firstName, lastName } = req.body;
+    const { firstName, lastName, profilePicture } = req.body;
     const userToUpdate = await User.findByIdAndUpdate(
       req.userId,
       {
         firstName,
         lastName,
+        profilePicture,
       },
       { new: true }
     ).select("firstName lastName profilePicture");
