@@ -55,7 +55,8 @@ export async function register(req, res) {
     res.cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      sameSite: "None",
     });
 
     res.status(200).json({
@@ -108,7 +109,8 @@ export async function login(req, res) {
     res.cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      sameSite: "None",
     });
 
     res.json({
@@ -148,7 +150,8 @@ export async function getSession(req, res) {
 export async function logout(req, res) {
   res.cookie("token", "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
+    sameSite: "None",
     expires: new Date(0),
   });
   res
