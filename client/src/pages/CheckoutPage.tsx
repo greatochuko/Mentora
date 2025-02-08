@@ -1,4 +1,4 @@
-import { redirect, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import { useCartContext } from "../context/cartContext";
 import { useState } from "react";
@@ -46,6 +46,17 @@ export default function CheckoutPage() {
     e.preventDefault();
     if (loading || cannotSubmit) return;
     fetchData();
+  }
+
+  if (cartItems.length < 1) {
+    return (
+      <div className="flex h-full flex-1 flex-col items-center justify-center text-zinc-500">
+        You have no courses in your cart
+        <Link to={"/courses"} className="text-blue-500 hover:underline">
+          Keep shopping
+        </Link>
+      </div>
+    );
   }
 
   return (

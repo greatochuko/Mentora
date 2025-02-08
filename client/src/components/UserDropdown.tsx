@@ -1,9 +1,10 @@
 import { RxCaretDown, RxCaretUp } from "react-icons/rx";
 import { UserType } from "../context/userContext";
 import { useEffect, useRef, useState } from "react";
-import { MdLogout } from "react-icons/md";
+import { MdComputer, MdLogout } from "react-icons/md";
 import ModalContainer from "./ModalContainer";
 import LogoutModal from "./LogoutModal";
+import { Link } from "react-router-dom";
 
 export default function UserDropdown({ user }: { user: UserType }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -56,8 +57,14 @@ export default function UserDropdown({ user }: { user: UserType }) {
           </div>
         </button>
         <div
-          className={`absolute top-[120%] right-0 z-20 flex w-32 flex-col rounded-md border border-zinc-100 bg-white p-2 shadow duration-100 ${dropdownOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"}`}
+          className={`absolute top-[120%] right-0 z-20 flex w-40 flex-col rounded-md border border-zinc-100 bg-white p-2 shadow duration-100 ${dropdownOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"}`}
         >
+          <Link
+            to={"/my-courses"}
+            className="flex items-center gap-1 rounded-md px-4 py-2 duration-200 hover:bg-zinc-100"
+          >
+            <MdComputer /> My Courses
+          </Link>
           <button
             onClick={openSignOutModal}
             className="flex items-center gap-1 rounded-md px-4 py-2 duration-200 hover:bg-zinc-100"

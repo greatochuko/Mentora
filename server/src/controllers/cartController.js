@@ -91,7 +91,11 @@ export async function syncCart(req, res) {
     userToUpdate.cart = [
       ...userToUpdate.cart,
       ...courses.map((courseId) => ({ course: courseId })),
-    ];
+    ].filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex((t) => t.course.toString() === item.course.toString())
+    );
 
     await userToUpdate.save();
 

@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Order from "../models/Order.js";
 
 export async function register(req, res) {
   try {
@@ -122,27 +123,19 @@ export async function login(req, res) {
 
 export async function getSession(req, res) {
   try {
-    const { token } = req.cookies;
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Invalid token", success: false, data: null });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
-    const user = await User.findById(userId).select(
+    const user = await User.findById(req.userId).select(
       "firstName lastName profilePicture"
     );
-    if (!user) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized", success: false, data: null });
-    }
 
-    res
-      .status(200)
-      .json({ message: "Session active", success: true, data: user });
+    const userOrders = await Order.find({ user: req.userId });
+
+    const paidCourses = userOrders.flatMap((order) => order.courses);
+
+    res.status(200).json({
+      message: "Session active",
+      success: true,
+      data: { ...user._doc, paidCourses },
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

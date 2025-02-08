@@ -8,6 +8,7 @@ export type UserType = {
   email: string;
   password: string;
   profilePicture: string;
+  paidCourses: string[];
   createdAt: string;
   updatedAt: string;
 };

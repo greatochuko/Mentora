@@ -5,6 +5,7 @@ import {
   getSession,
   logout,
 } from "../controllers/authController.js";
+import { authenticate } from "../middleware/authenticate.js";
 
 const router = Router();
 
@@ -12,7 +13,7 @@ router.post("/register", register);
 
 router.post("/login", login);
 
-router.get("/session", getSession);
+router.get("/session", authenticate, getSession);
 
 router.post("/logout", logout);
 

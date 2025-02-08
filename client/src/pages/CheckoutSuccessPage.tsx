@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import LoadingPage from "../components/LoadingPage";
 import { useEffect } from "react";
@@ -15,6 +15,7 @@ export default function CheckoutSuccessPage() {
     data: order,
   } = useFetch({
     url: `/order/${orderId}`,
+    startLoading: true,
   });
 
   useEffect(() => {
@@ -31,6 +32,13 @@ export default function CheckoutSuccessPage() {
         <FaCheck className="h-20 w-20 fill-white" />
       </div>
       <h1 className="text-2xl font-medium sm:text-3xl">Order Complete</h1>
+      <p className="text-center text-sm text-zinc-500">
+        Your order has been successfully processed. Go to{" "}
+        <Link to="/my-courses" className="text-blue-600 underline">
+          My Courses
+        </Link>{" "}
+        page to view your courses.
+      </p>
     </main>
   );
 }
