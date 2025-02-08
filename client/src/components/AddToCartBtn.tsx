@@ -9,7 +9,9 @@ export default function AddToCartBtn({ course }: { course: CourseType }) {
   const { user, loadingSession } = useUserContext();
 
   const courseInCart = cartItems.find((item) => item.course._id === course._id);
-  const userOwnsCourse = user?.paidCourses.some((c) => c._id === course._id);
+  const userOwnsCourse = user?.paidCourses?.some((c) => c._id === course._id);
+
+  console.log(user?.paidCourses);
 
   if (userOwnsCourse)
     return (

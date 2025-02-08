@@ -34,6 +34,22 @@ export async function createCourse(req, res) {
   }
 }
 
+export async function updateCourse(req, res) {
+  try {
+    const { courseId } = req.params;
+    const newCourse = await Course.findByIdAndUpdate(courseId, req.body);
+
+    res.status(200).json({
+      message: "Courses created successfully",
+      success: true,
+      data: newCourse,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+}
+
 export async function getAllCoursesByUser(req, res) {
   try {
     const { userId } = req.params;

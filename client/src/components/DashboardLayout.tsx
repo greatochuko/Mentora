@@ -1,4 +1,4 @@
-import { Outlet, redirect } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import DashboardSidebar from "./DashboardSidebar";
 import { useUserContext } from "../context/userContext";
 import LoadingPage from "./LoadingPage";
@@ -7,11 +7,11 @@ import { useState } from "react";
 export default function DashboardLayout() {
   const { user, loadingSession } = useUserContext();
 
-  const [expandSidebar, setExpandSidebar] = useState(false);
+  const [expandSidebar, setExpandSidebar] = useState(true);
 
   if (loadingSession) return <LoadingPage className="min-h-screen" />;
 
-  if (!user) redirect("/login");
+  if (!user) return <Navigate to={"/login"} replace />;
 
   return (
     <main className="flex min-h-screen">

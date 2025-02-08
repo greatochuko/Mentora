@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUserContext } from "../context/userContext";
 import LoadingPage from "../components/LoadingPage";
-import { redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { uploadFile } from "../lib/utils";
 
@@ -64,7 +64,7 @@ export default function UserProfilePage() {
     }
   }
 
-  if (!user) redirect("/login");
+  if (!user) return <Navigate to={"/login"} replace />;
 
   return (
     <main className="mx-auto w-[90%] max-w-7xl flex-1 py-8">

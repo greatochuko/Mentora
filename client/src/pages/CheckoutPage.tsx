@@ -1,4 +1,4 @@
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import { useCartContext } from "../context/cartContext";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export default function CheckoutPage() {
     },
   });
 
-  if (!user) redirect("/login");
+  if (!user) return <Navigate to={"/login"} replace />;
 
   if (cartLoading) return <LoadingPage />;
 

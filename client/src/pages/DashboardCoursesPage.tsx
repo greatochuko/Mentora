@@ -38,7 +38,7 @@ export default function DashboardCoursesPage() {
       </div>
 
       <div
-        className={`w-[calc(100vw-7rem)] overflow-x-scroll ${expandSidebar ? "md:w-[calc(100vw-14rem)]" : ""}`}
+        className={`w-[calc(100vw-7rem)] overflow-x-scroll ${expandSidebar ? "md:w-[calc(100vw-15rem)]" : ""}`}
       >
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">

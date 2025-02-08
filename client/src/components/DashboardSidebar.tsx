@@ -1,4 +1,4 @@
-import { LuBookText, LuPackage } from "react-icons/lu";
+import { LuBookText } from "react-icons/lu";
 import { TbDeviceAnalytics } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { UserType } from "../context/userContext";
@@ -16,11 +16,11 @@ const sidebarLinks = [
     icon: LuBookText,
     href: "/dashboard/courses",
   },
-  {
-    text: "Orders",
-    icon: LuPackage,
-    href: "/dashboard/orders",
-  },
+  // {
+  //   text: "Orders",
+  //   icon: LuPackage,
+  //   href: "/dashboard/orders",
+  // },
 ];
 
 export default function DashboardSidebar({

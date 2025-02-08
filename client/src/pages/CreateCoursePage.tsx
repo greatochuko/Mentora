@@ -54,6 +54,9 @@ export default function CreateCoursePage() {
   useEffect(() => {
     if (!course) return;
     setTitle(course.title);
+    setThumbnail(course.thumbnail);
+    setPrice(course.price);
+    setCategory(course.category);
     setDescription(course.description);
     setChapters(course.content);
   }, [course]);
@@ -174,7 +177,36 @@ export default function CreateCoursePage() {
     setCreatingCourse(false);
   }
 
-  function handleEditCourse() {}
+  async function handleUpdateCourse(event: React.FormEvent) {
+    event.preventDefault();
+    if (cannotSubmit) return;
+    setCreatingCourse(true);
+    try {
+      const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      if (!BASE_URL) return;
+      const res = await fetch(`${BASE_URL}/api/v1/courses/${courseId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "Application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          title,
+          description,
+          thumbnail,
+          category,
+          price: price * 100,
+          content: chapters,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      navigate("/dashboard/courses");
+    } catch (err) {
+      const error = err as Error;
+      console.log(error.message);
+    }
+    setCreatingCourse(false);
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-8">
       <div className="flex items-center justify-between">
@@ -188,7 +220,7 @@ export default function CreateCoursePage() {
         )}
       </div>
       <form
-        onSubmit={courseId ? handleEditCourse : handleCreateCourse}
+        onSubmit={courseId ? handleUpdateCourse : handleCreateCourse}
         className="flex flex-col gap-8 text-sm"
       >
         <div className="flex flex-col gap-4">
