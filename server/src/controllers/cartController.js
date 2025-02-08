@@ -112,3 +112,28 @@ export async function syncCart(req, res) {
     res.status(500).json({ message: error.message });
   }
 }
+
+export async function resetCart(req, res) {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.userId,
+      { cart: [] },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      res.status(400).json({
+        message: "Unable to reset cart",
+        data: null,
+      });
+    }
+
+    res.status(200).json({
+      message: "Cart reset successfully",
+      data: updatedUser.cart,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+}

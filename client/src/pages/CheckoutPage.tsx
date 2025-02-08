@@ -13,14 +13,14 @@ export default function CheckoutPage() {
   const [CVV, setCVV] = useState("");
 
   const { user } = useUserContext();
-  const { cartItems, cartLoading, resetCartToLocalStorage } = useCartContext();
+  const { cartItems, cartLoading, resetCart } = useCartContext();
 
   const navigate = useNavigate();
 
   const { fetchData, loading } = useFetch({
     url: "/order",
     onSuccess(result) {
-      resetCartToLocalStorage();
+      resetCart();
       navigate(`/checkout/success?id=${result.data._id}`);
     },
     method: "POST",
@@ -50,7 +50,7 @@ export default function CheckoutPage() {
 
   return (
     <main className="mx-auto flex w-[90%] max-w-7xl flex-1 flex-col gap-8 py-8 lg:flex-row">
-      <div className="flex flex-col gap-2 lg:order-2 lg:w-72">
+      <div className="flex flex-col gap-2 lg:order-2 lg:flex-1">
         <h1 className="text-lg font-medium sm:text-xl">Order Details</h1>
         {cartItems.map(({ course }) => (
           <div
@@ -77,7 +77,7 @@ export default function CheckoutPage() {
 
       <form
         onSubmit={handleCheckout}
-        className="flex h-fit flex-1 flex-col gap-4 rounded-lg border border-zinc-300 p-4 text-sm"
+        className="flex h-fit flex-[2] flex-col gap-4 rounded-lg border border-zinc-300 p-4 text-sm"
       >
         <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-yellow-800">
           <p>

@@ -14,6 +14,7 @@ const cartContext = createContext<{
   removeItemFromCart(courseId: string): void;
   syncCart(): void;
   resetCartToLocalStorage(): void;
+  resetCart(): void;
 }>({
   cartItems: [],
   cartLoading: true,
@@ -21,6 +22,7 @@ const cartContext = createContext<{
   removeItemFromCart: () => {},
   syncCart: () => {},
   resetCartToLocalStorage: () => {},
+  resetCart: () => {},
 });
 
 export default function CartProvider({
@@ -132,6 +134,24 @@ export default function CartProvider({
     setCartItems(localStorageCart);
   }
 
+  async function resetCart() {
+    try {
+      const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+      if (!BASE_URL) return;
+      const res = await fetch(`${BASE_URL}/api/v1/cart  `, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+      setCartItems([]);
+      localStorage.removeItem("cart");
+    } catch (err) {
+      const error = err as Error;
+      console.log(error.message);
+    }
+  }
+
   return (
     <cartContext.Provider
       value={{
@@ -141,6 +161,7 @@ export default function CartProvider({
         removeItemFromCart,
         syncCart,
         resetCartToLocalStorage,
+        resetCart,
       }}
     >
       {children}
