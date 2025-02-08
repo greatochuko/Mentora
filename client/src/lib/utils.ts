@@ -10,9 +10,12 @@ export function getCourseRating(course: CourseType) {
 export function formatTime(seconds: number): string {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
   const hoursDisplay = hours > 0 ? `${hours}h ` : "";
-  const minutesDisplay = minutes > 0 ? `${minutes}m` : "";
-  return `${hoursDisplay}${minutesDisplay}`.trim();
+  const minutesDisplay = minutes > 0 ? `${minutes}m ` : "";
+  const secondsDisplay =
+    hours === 0 && remainingSeconds > 0 ? `${remainingSeconds.toFixed()}s` : "";
+  return `${hoursDisplay}${minutesDisplay}${secondsDisplay}`.trim();
 }
 
 // export async function uploadVideos(
@@ -67,8 +70,7 @@ export async function uploadFile(
         body: formData,
       },
     );
-    const { secure_url, error } = await res.json();
-    console.log(error);
+    const { secure_url } = await res.json();
 
     if (!res.ok) throw new Error("An error occured uploading image");
 

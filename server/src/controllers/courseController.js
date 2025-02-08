@@ -21,13 +21,12 @@ export async function getAllCourses(req, res) {
 
 export async function createCourse(req, res) {
   try {
-    const newCourse = await Course.create(req.body);
+    const newCourse = await Course.create({ ...req.body, user: req.userId });
 
     res.status(200).json({
       message: "Courses created successfully",
       success: true,
       data: newCourse,
-      user: req.userId,
     });
   } catch (error) {
     console.log(error.message);
@@ -38,10 +37,12 @@ export async function createCourse(req, res) {
 export async function getAllCoursesByUser(req, res) {
   try {
     const { userId } = req.params;
-    const allCourses = await Course.find({ user: userId }).populate({
-      path: "user",
-      populate: "firstName lastName profilePicture",
-    });
+    const allCourses = await Course.find({ user: userId })
+      .populate({
+        path: "user",
+        populate: "firstName lastName profilePicture",
+      })
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       message: "Courses retrieved successfully",

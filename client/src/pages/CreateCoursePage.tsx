@@ -245,7 +245,7 @@ export default function CreateCoursePage() {
               name="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-md border border-zinc-300 p-2"
+              className="w-fit rounded-md border border-zinc-300 p-2"
             >
               <option value="" hidden>
                 Select a Category

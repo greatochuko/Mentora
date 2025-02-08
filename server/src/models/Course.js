@@ -26,7 +26,7 @@ const CourseSchema = new mongoose.Schema(
       type: [mongoose.SchemaTypes.ObjectId],
       default: [],
     },
-    user: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
+    user: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: "User" },
     content: [
       {
         title: { type: String, required: true },
