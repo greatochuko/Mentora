@@ -60,6 +60,7 @@ export default function UserDropdown({ user }: { user: UserType }) {
           className={`absolute top-[120%] right-0 z-20 flex w-40 flex-col rounded-md border border-zinc-100 bg-white p-2 shadow duration-100 ${dropdownOpen ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"}`}
         >
           <Link
+            onClick={() => setDropdownOpen(false)}
             to={"/my-courses"}
             className="flex items-center gap-1 rounded-md px-4 py-2 duration-200 hover:bg-zinc-100"
           >

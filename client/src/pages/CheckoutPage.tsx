@@ -50,12 +50,12 @@ export default function CheckoutPage() {
 
   if (cartItems.length < 1) {
     return (
-      <div className="flex h-full flex-1 flex-col items-center justify-center text-zinc-500">
+      <main className="flex h-full flex-1 flex-col items-center justify-center text-zinc-500">
         You have no courses in your cart
         <Link to={"/courses"} className="text-blue-500 hover:underline">
           Keep shopping
         </Link>
-      </div>
+      </main>
     );
   }
 

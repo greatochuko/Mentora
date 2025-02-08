@@ -9,15 +9,15 @@ export default function AddToCartBtn({ course }: { course: CourseType }) {
   const { user, loadingSession } = useUserContext();
 
   const courseInCart = cartItems.find((item) => item.course._id === course._id);
-  const userOwnsCourse = user?.paidCourses.some((c) => c === course._id);
+  const userOwnsCourse = user?.paidCourses.some((c) => c._id === course._id);
 
   if (userOwnsCourse)
     return (
       <Link
-        to={"/my-courses"}
+        to={`/my-courses/${course._id}`}
         className="rounded-full border border-blue-500 px-3 py-1.5 text-sm font-medium text-blue-500 duration-200 hover:bg-blue-100 disabled:opacity-50"
       >
-        Go to course
+        View Course
       </Link>
     );
 

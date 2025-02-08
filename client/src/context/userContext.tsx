@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
+import { CourseType } from "../components/CourseCard";
 
 export type UserType = {
   _id: string;
@@ -8,7 +9,7 @@ export type UserType = {
   email: string;
   password: string;
   profilePicture: string;
-  paidCourses: string[];
+  paidCourses: CourseType[];
   createdAt: string;
   updatedAt: string;
 };

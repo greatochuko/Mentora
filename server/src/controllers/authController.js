@@ -127,7 +127,11 @@ export async function getSession(req, res) {
       "firstName lastName profilePicture"
     );
 
-    const userOrders = await Order.find({ user: req.userId });
+    const userOrders = await Order.find({ user: req.userId }).populate({
+      path: "courses",
+      select: "title thumbnail reviews user",
+      populate: { path: "user", select: "firstName lastName profilePicture" },
+    });
 
     const paidCourses = userOrders.flatMap((order) => order.courses);
 
