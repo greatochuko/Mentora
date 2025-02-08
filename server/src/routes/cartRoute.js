@@ -5,6 +5,7 @@ import {
   addItemToCart,
   removeItemFromCart,
   syncCart,
+  checkout,
 } from "../controllers/cartController.js";
 
 const router = Router();
@@ -16,5 +17,7 @@ router.post("/add/:courseId", authenticate, addItemToCart);
 router.post("/remove/:courseId", authenticate, removeItemFromCart);
 
 router.post("/sync", authenticate, syncCart);
+
+router.post("/checkout", authenticate, checkout);
 
 export default router;

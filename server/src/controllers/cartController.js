@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
+import Order from "../models/Order.js";
 
 export async function getCart(req, res) {
   try {
@@ -96,6 +97,28 @@ export async function syncCart(req, res) {
     res.status(200).json({
       message: "Cart synced successfully",
       data: updatedUser.cart,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export async function checkout(req, res) {
+  try {
+    const user = await User.findById(req.userId).populate({
+      path: "cart",
+      populate: { path: "course", populate: "user" },
+    });
+
+    const newOrder = Order.create({
+      user: user._id,
+      courses: user.cart.map((item) => item.course),
+      totalPrice: user.cart.reduce((acc, curr) => acc + curr.course.price, 0),
+    });
+
+    res.status(200).json({
+      message: "Checkout successfully",
+      data: newOrder,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
