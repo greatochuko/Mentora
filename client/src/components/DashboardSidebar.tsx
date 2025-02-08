@@ -3,7 +3,7 @@ import { TbDeviceAnalytics } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { UserType } from "../context/userContext";
 import { GoSidebarCollapse } from "react-icons/go";
-import { useState } from "react";
+import React from "react";
 
 const sidebarLinks = [
   {
@@ -23,10 +23,16 @@ const sidebarLinks = [
   },
 ];
 
-export default function DashboardSidebar({ user }: { user: UserType }) {
+export default function DashboardSidebar({
+  user,
+  expandSidebar,
+  setExpandSidebar,
+}: {
+  user: UserType;
+  expandSidebar: boolean;
+  setExpandSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { pathname } = useLocation();
-
-  const [expandSidebar, setExpandSidebar] = useState(false);
 
   return (
     <div

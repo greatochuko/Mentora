@@ -19,6 +19,25 @@ export async function getAllCourses(req, res) {
   }
 }
 
+export async function getAllCoursesByUser(req, res) {
+  try {
+    const { userId } = req.params;
+    const allCourses = await Course.find({ user: userId }).populate({
+      path: "user",
+      populate: "firstName lastName profilePicture",
+    });
+
+    res.status(200).json({
+      message: "Courses retrieved successfully",
+      success: true,
+      data: allCourses,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+}
+
 export async function searchCourses(req, res) {
   try {
     const { query, page, sort } = req.query;
