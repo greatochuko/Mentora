@@ -37,7 +37,7 @@ export default function CourseWatchPage() {
     <main className="mx-auto flex w-[90%] max-w-7xl flex-1 gap-8 py-8">
       <div className="flex flex-[2] flex-col gap-4">
         <video
-          src={selectedContent.videoUrl}
+          src={selectedContent.video.url}
           className="rounded-lg"
           controls
         ></video>
@@ -136,7 +136,7 @@ function CourseCompletion({
             </p>
             <span className="ml-auto flex items-center gap-1 text-zinc-500">
               <IoVideocamOutline className="h-4 w-4 stroke-zinc-500" />
-              {formatTime(content.duration)}
+              {formatTime(content.video.duration)}
             </span>
           </div>
         ))}

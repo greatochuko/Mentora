@@ -6,10 +6,6 @@ const CourseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    subtitle: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
       required: true,
@@ -34,8 +30,11 @@ const CourseSchema = new mongoose.Schema(
     content: {
       title: { type: String, required: true },
       description: { type: String, required: true },
-      videoUrl: { type: String, required: true },
-      duration: { type: Number, required: true },
+      video: {
+        fileName: { type: String, required: true },
+        url: { type: String, required: true },
+        duration: { type: Number, required: true },
+      },
     },
   },
   { timestamps: true }

@@ -5,6 +5,12 @@ import { ReviewType } from "./ReviewCard";
 import { UserType } from "../context/userContext";
 import AddToCartBtn from "./AddToCartBtn";
 
+export type CourseContentType = {
+  title: string;
+  description: string;
+  video: { fileName: string; url: string; duration: number };
+};
+
 export type CourseType = {
   _id: string;
   title: string;
@@ -14,12 +20,7 @@ export type CourseType = {
   price: number;
   category: string;
   reviews: ReviewType[];
-  content: {
-    title: string;
-    description: string;
-    videoUrl: string;
-    duration: number;
-  }[];
+  content: CourseContentType[];
   user: UserType;
   createdAt: string;
   updatedAt: string;

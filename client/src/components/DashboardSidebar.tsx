@@ -36,7 +36,7 @@ export default function DashboardSidebar({
 
   return (
     <div
-      className={`sticky top-0 flex h-screen flex-col gap-8 overflow-hidden bg-[#0F172A] p-4 duration-300 ${expandSidebar ? "w-14 md:w-48" : "w-14"}`}
+      className={`sticky top-0 flex h-screen shrink-0 flex-col gap-8 overflow-hidden bg-[#0F172A] p-4 duration-300 ${expandSidebar ? "w-14 md:w-48" : "w-14"}`}
     >
       <div className="flex items-center justify-between">
         <Link
@@ -57,11 +57,26 @@ export default function DashboardSidebar({
       <ul
         className={`flex flex-col ${expandSidebar ? "gap-6 md:gap-2" : "gap-6"}`}
       >
-        {sidebarLinks.map((link) => (
+        <li key={sidebarLinks[0].text}>
+          <Link
+            to={sidebarLinks[0].href}
+            className={`group flex items-center gap-1 rounded-md duration-200 hover:bg-white/10 ${pathname === sidebarLinks[0].href ? "text-white" : "text-zinc-500"} ${expandSidebar ? "justify-center md:justify-start md:p-2" : "justify-center"}`}
+          >
+            <TbDeviceAnalytics
+              className={`h-5 w-5 duration-200 group-hover:stroke-white ${pathname === sidebarLinks[0].href ? "stroke-white" : "stroke-zinc-500"}`}
+            />
+            <span
+              className={`text-white ${expandSidebar ? "hidden md:inline" : "hidden"}`}
+            >
+              {sidebarLinks[0].text}
+            </span>
+          </Link>
+        </li>
+        {sidebarLinks.slice(1).map((link) => (
           <li key={link.text}>
             <Link
               to={link.href}
-              className={`group flex items-center gap-1 rounded-md duration-200 hover:bg-white/10 ${pathname.startsWith("/dashboard") ? "text-white" : "text-zinc-500"} ${expandSidebar ? "justify-center md:justify-start md:p-2" : "justify-center"}`}
+              className={`group flex items-center gap-1 rounded-md duration-200 hover:bg-white/10 ${pathname.startsWith(link.href) ? "text-white" : "text-zinc-500"} ${expandSidebar ? "justify-center md:justify-start md:p-2" : "justify-center"}`}
             >
               <link.icon
                 className={`h-5 w-5 duration-200 group-hover:stroke-white ${pathname.startsWith(link.href) ? "stroke-white" : "stroke-zinc-500"}`}

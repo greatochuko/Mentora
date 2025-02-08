@@ -88,7 +88,7 @@ export default function CourseDetailsPage() {
   if (!course) return <NotFoundPage />;
 
   const totalCourseLength = course.content.reduce(
-    (acc, curr) => acc + curr.duration,
+    (acc, curr) => acc + curr.video.duration,
     0,
   );
 
@@ -170,7 +170,7 @@ export default function CourseDetailsPage() {
                     )}
                     <h3 className="ml-2 font-medium">{chapter.title} </h3>
                     <span className="mx-2 ml-auto text-sm text-zinc-500">
-                      {formatTime(chapter.duration)}
+                      {formatTime(chapter.video.duration)}
                     </span>
                   </div>
                   <p

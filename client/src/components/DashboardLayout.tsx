@@ -21,7 +21,7 @@ export default function DashboardLayout() {
         setExpandSidebar={setExpandSidebar}
       />
       <div className="flex-1 p-4">
-        <Outlet />
+        <Outlet context={{ expandSidebar }} />
       </div>
     </main>
   );

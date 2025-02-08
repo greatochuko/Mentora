@@ -19,6 +19,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardLayout from "./components/DashboardLayout";
 import DashboardCoursesPage from "./pages/DashboardCoursesPage";
+import CreateCoursePage from "./pages/CreateCoursePage";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardPage /> },
       { path: "/dashboard/courses", element: <DashboardCoursesPage /> },
+      { path: "/dashboard/courses/new", element: <CreateCoursePage /> },
+      {
+        path: "/dashboard/courses/edit/:courseId",
+        element: <CreateCoursePage />,
+      },
     ],
   },
   {

@@ -156,73 +156,93 @@ export async function populate(req, res) {
     {
       title: "Introduction to the Course",
       description: "Overview of what will be covered in the course.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 300,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 300,
+      },
     },
     {
       title: "Getting Started with React",
       description:
         "Introduction to React and setting up the development environment.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 1800,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 1800,
+      },
     },
     {
       title: "Components and Props",
       description: "Understanding components and props in React.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 2400,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 2400,
+      },
     },
     {
       title: "State and Lifecycle",
       description: "Managing state and lifecycle methods in React.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 2700,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 2700,
+      },
     },
     {
       title: "Handling Events",
       description: "Handling events in React applications.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 1500,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 1500,
+      },
     },
     {
       title: "Conditional Rendering",
       description: "Implementing conditional rendering in React.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 1200,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 1200,
+      },
     },
     {
       title: "Lists and Keys",
       description: "Working with lists and keys in React.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 1800,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 1800,
+      },
     },
     {
       title: "Forms",
       description: "Building and managing forms in React.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 2100,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 2100,
+      },
     },
     {
       title: "Lifting State Up",
       description: "Techniques for lifting state up in React.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 1800,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 1800,
+      },
     },
     {
       title: "Composition vs Inheritance",
       description: "Understanding composition vs inheritance in React.",
-      videoUrl:
-        "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
-      duration: 1500,
+      video: {
+        fileName: "3125427-sd_640_360_25fps.mp4",
+        url: "https://videos.pexels.com/video-files/3125427/3125427-sd_640_360_25fps.mp4",
+        duration: 1500,
+      },
     },
   ];
   await Course.updateMany({}, { content: courseContent });

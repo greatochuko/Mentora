@@ -3,11 +3,13 @@ import useFetch from "../hooks/useFetch";
 import { useUserContext } from "../context/userContext";
 import { useEffect } from "react";
 import { CourseType } from "../components/CourseCard";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import LoadingPage from "../components/LoadingPage";
 import { formatTime } from "../lib/utils";
 
 export default function DashboardPage() {
+  const { expandSidebar } = useOutletContext<{ expandSidebar: boolean }>();
+
   const { user } = useUserContext();
 
   const { fetchData, data, loading } = useFetch({
@@ -78,7 +80,9 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        <div className="w-[calc(100vw-5.5rem)] overflow-x-scroll md:w-[calc(100vw-14rem)]">
+        <div
+          className={`w-[calc(100vw-7rem)] overflow-x-scroll ${expandSidebar ? "md:w-[calc(100vw-14rem)]" : ""}`}
+        >
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -117,7 +121,7 @@ export default function DashboardPage() {
                   <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
                     {formatTime(
                       course.content.reduce(
-                        (acc, curr) => acc + curr.duration,
+                        (acc, curr) => acc + curr.video.duration,
                         0,
                       ),
                     )}
