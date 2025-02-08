@@ -55,7 +55,7 @@ export default function CreateCoursePage() {
     if (!course) return;
     setTitle(course.title);
     setThumbnail(course.thumbnail);
-    setPrice(course.price);
+    setPrice(course.price / 100);
     setCategory(course.category);
     setDescription(course.description);
     setChapters(course.content);
