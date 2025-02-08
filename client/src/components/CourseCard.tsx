@@ -14,6 +14,12 @@ export type CourseType = {
   price: number;
   category: string;
   reviews: ReviewType[];
+  content: {
+    title: string;
+    description: string;
+    videoUrl: string;
+    duration: number;
+  }[];
   user: UserType;
   createdAt: string;
   updatedAt: string;

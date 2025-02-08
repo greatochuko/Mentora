@@ -8,13 +8,13 @@ export default function MyCoursesPage() {
 
   if (loadingSession) return <LoadingPage />;
 
-  if (!user) return redirect("/login");
+  if (!user) redirect("/login");
 
   return (
     <main className="mx-auto flex w-[90%] max-w-7xl flex-1 flex-col gap-8 py-8 lg:flex-row">
       <h1 className="text-lg font-medium sm:text-xl">My Courses</h1>
       <div className="grid grid-cols-[repeat(auto-fill,_minmax(240px,_1fr))] gap-4">
-        {user.paidCourses.map((course) => (
+        {user!.paidCourses.map((course) => (
           <MyCourseCard key={course._id} course={course} />
         ))}
       </div>

@@ -5,61 +5,7 @@ import { CourseType } from "../components/CourseCard";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp, FaStar } from "react-icons/fa";
 import NotFoundPage from "./NotFoundPage";
-import { getCourseRating } from "../lib/utils";
-
-const courseContent = [
-  {
-    title: "Introduction to the Course",
-    description: "Overview of what will be covered in the course.",
-    lengthInSeconds: 300,
-  },
-  {
-    title: "Getting Started with React",
-    description:
-      "Introduction to React and setting up the development environment.",
-    lengthInSeconds: 1800,
-  },
-  {
-    title: "Components and Props",
-    description: "Understanding components and props in React.",
-    lengthInSeconds: 2400,
-  },
-  {
-    title: "State and Lifecycle",
-    description: "Managing state and lifecycle methods in React.",
-    lengthInSeconds: 2700,
-  },
-  {
-    title: "Handling Events",
-    description: "Handling events in React applications.",
-    lengthInSeconds: 1500,
-  },
-  {
-    title: "Conditional Rendering",
-    description: "Implementing conditional rendering in React.",
-    lengthInSeconds: 1200,
-  },
-  {
-    title: "Lists and Keys",
-    description: "Working with lists and keys in React.",
-    lengthInSeconds: 1800,
-  },
-  {
-    title: "Forms",
-    description: "Building and managing forms in React.",
-    lengthInSeconds: 2100,
-  },
-  {
-    title: "Lifting State Up",
-    description: "Techniques for lifting state up in React.",
-    lengthInSeconds: 1800,
-  },
-  {
-    title: "Composition vs Inheritance",
-    description: "Understanding composition vs inheritance in React.",
-    lengthInSeconds: 1500,
-  },
-];
+import { formatTime, getCourseRating } from "../lib/utils";
 
 const reviews = [
   {
@@ -119,21 +65,8 @@ const reviews = [
   },
 ];
 
-const totalCourseLength = courseContent.reduce(
-  (acc, curr) => acc + curr.lengthInSeconds,
-  0,
-);
-
 const averageRating =
   reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length;
-
-function formatTime(seconds: number): string {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const hoursDisplay = hours > 0 ? `${hours}h ` : "";
-  const minutesDisplay = minutes > 0 ? `${minutes}m` : "";
-  return `${hoursDisplay}${minutesDisplay}`.trim();
-}
 
 export default function CourseDetailsPage() {
   const { courseId } = useParams();
@@ -153,6 +86,11 @@ export default function CourseDetailsPage() {
   if (loading) return <LoadingPage />;
 
   if (!course) return <NotFoundPage />;
+
+  const totalCourseLength = course.content.reduce(
+    (acc, curr) => acc + curr.duration,
+    0,
+  );
 
   const courseRating = getCourseRating(course);
 
@@ -212,11 +150,11 @@ export default function CourseDetailsPage() {
           <section className="mt-4 flex flex-col gap-2">
             <h2 className="text-2xl font-medium">Course Content</h2>
             <p className="text-sm text-zinc-500">
-              {courseContent.length} videos &bull;{" "}
+              {course.content.length} videos &bull;{" "}
               {formatTime(totalCourseLength)} total length
             </p>
             <div className="mt-2 rounded-lg border border-zinc-300">
-              {courseContent.map((chapter, index) => (
+              {course.content.map((chapter, index) => (
                 <div
                   key={index}
                   className="border-b border-zinc-300 last:border-none"
@@ -232,7 +170,7 @@ export default function CourseDetailsPage() {
                     )}
                     <h3 className="ml-2 font-medium">{chapter.title} </h3>
                     <span className="mx-2 ml-auto text-sm text-zinc-500">
-                      {formatTime(chapter.lengthInSeconds)}
+                      {formatTime(chapter.duration)}
                     </span>
                   </div>
                   <p
