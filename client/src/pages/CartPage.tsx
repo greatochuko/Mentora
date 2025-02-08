@@ -2,13 +2,13 @@ import { FaStar } from "react-icons/fa";
 import { useCartContext } from "../context/cartContext";
 import { getCourseRating } from "../lib/utils";
 import { Link } from "react-router-dom";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingPage from "../components/LoadingPage";
 import OrderDetails from "../components/OrderDetails";
 
 export default function CartPage() {
   const { cartItems, removeItemFromCart, cartLoading } = useCartContext();
 
-  if (cartLoading) return <LoadingScreen />;
+  if (cartLoading) return <LoadingPage />;
 
   const totalPrice = (
     cartItems.reduce((acc, curr) => acc + curr.course.price, 0) / 100

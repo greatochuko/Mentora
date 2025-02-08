@@ -6,7 +6,11 @@ export async function getCart(req, res) {
   try {
     const user = await User.findById(req.userId).populate({
       path: "cart",
-      populate: { path: "course", populate: "user" },
+      populate: {
+        path: "course",
+        select: "title thumbnail user price reviews",
+        populate: { path: "user", select: "firstName lastName profilePicture" },
+      },
     });
 
     res.status(200).json({
@@ -48,7 +52,11 @@ export async function removeItemFromCart(req, res) {
 
     const updatedUser = await User.findById(req.userId).populate({
       path: "cart",
-      populate: "course",
+      populate: {
+        path: "course",
+        select: "title thumbnail user price reviews",
+        populate: { path: "user", select: "firstName lastName profilePicture" },
+      },
     });
     updatedUser.cart = updatedUser.cart.filter(
       (item) => item.course._id.toString() !== courseId
@@ -91,7 +99,11 @@ export async function syncCart(req, res) {
 
     const updatedUser = await User.findById(req.userId).populate({
       path: "cart",
-      populate: { path: "course", populate: "user" },
+      populate: {
+        path: "course",
+        select: "title thumbnail user price reviews",
+        populate: { path: "user", select: "firstName lastName profilePicture" },
+      },
     });
 
     res.status(200).json({
@@ -105,15 +117,15 @@ export async function syncCart(req, res) {
 
 export async function checkout(req, res) {
   try {
-    const user = await User.findById(req.userId).populate({
-      path: "cart",
-      populate: { path: "course", populate: "user" },
-    });
+    const { cartItems, totalPrice, userId } = req.body;
 
-    const newOrder = Order.create({
-      user: user._id,
-      courses: user.cart.map((item) => item.course),
-      totalPrice: user.cart.reduce((acc, curr) => acc + curr.course.price, 0),
+    if (req.userId !== userId)
+      return res.status(401).json({ data: null, message: "Unauthorized" });
+
+    const newOrder = await Order.create({
+      user: req.userId,
+      courses: cartItems,
+      totalPrice,
     });
 
     res.status(200).json({

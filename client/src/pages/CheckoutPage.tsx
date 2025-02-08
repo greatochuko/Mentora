@@ -1,8 +1,10 @@
-import { redirect } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import { useCartContext } from "../context/cartContext";
 import { useState } from "react";
 import useFetch from "../hooks/useFetch";
+import LoadingIndicator from "../components/LoadingIndicator";
+import LoadingPage from "../components/LoadingPage";
 
 export default function CheckoutPage() {
   const [cardNumber, setCardNumber] = useState("");
@@ -10,12 +12,27 @@ export default function CheckoutPage() {
   const [expiryDate, setExpiryDate] = useState("");
   const [CVV, setCVV] = useState("");
 
-  const { fetchData, loading } = useFetch({ url: "/cart/checkout" });
-
   const { user } = useUserContext();
-  const { cartItems } = useCartContext();
+  const { cartItems, cartLoading } = useCartContext();
+
+  const navigate = useNavigate();
+
+  const { fetchData, loading } = useFetch({
+    url: "/cart/checkout",
+    onSuccess(result) {
+      navigate(`/checkout/success?id=${result.data._id}`);
+    },
+    method: "POST",
+    body: {
+      cartItems: cartItems.map(({ course }) => course._id),
+      totalPrice: cartItems.reduce((acc, curr) => acc + curr.course.price, 0),
+      userId: user?._id,
+    },
+  });
 
   if (!user) redirect("/login");
+
+  if (cartLoading) return <LoadingPage />;
 
   const totalPrice = (
     cartItems.reduce((acc, curr) => acc + curr.course.price, 0) / 100
@@ -24,7 +41,8 @@ export default function CheckoutPage() {
   const cannotSubmit =
     !cardNumber || !nameOnCard || expiryDate.length < 5 || CVV.length < 3;
 
-  async function handleCheckout() {
+  async function handleCheckout(e: React.FormEvent) {
+    e.preventDefault();
     if (loading || cannotSubmit) return;
     fetchData();
   }
@@ -60,6 +78,12 @@ export default function CheckoutPage() {
         onSubmit={handleCheckout}
         className="flex h-fit flex-1 flex-col gap-4 rounded-lg border border-zinc-300 p-4 text-sm"
       >
+        <div className="rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-yellow-800">
+          <p>
+            This is a test transaction. You can use any card number, expiry
+            date, and CVV.
+          </p>
+        </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="card-number">Card Number</label>
           <input
@@ -133,9 +157,9 @@ export default function CheckoutPage() {
         <button
           disabled={cannotSubmit || loading}
           type="submit"
-          className="rounded-lg bg-blue-500 px-4 py-2 text-center text-sm font-medium text-white duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-500/50 sm:text-base"
+          className="flex h-10 items-center justify-center rounded-lg bg-blue-500 px-4 py-2 text-center text-sm font-medium text-white ring-blue-400 ring-offset-2 duration-200 hover:bg-blue-600 focus-visible:ring-2 disabled:cursor-not-allowed disabled:bg-blue-500/50 sm:text-base"
         >
-          Pay
+          {loading ? <LoadingIndicator /> : "Pay"}
         </button>
       </form>
     </main>

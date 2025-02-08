@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingPage from "../components/LoadingPage";
 import { CourseType } from "../components/CourseCard";
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp, FaStar } from "react-icons/fa";
@@ -150,7 +150,7 @@ export default function CourseDetailsPage() {
 
   const course = data as CourseType;
 
-  if (loading) return <LoadingScreen />;
+  if (loading) return <LoadingPage />;
 
   if (!course) return <NotFoundPage />;
 
