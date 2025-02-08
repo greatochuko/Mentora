@@ -1,6 +1,4 @@
-import mongoose from "mongoose";
 import User from "../models/User.js";
-import Order from "../models/Order.js";
 
 export async function getCart(req, res) {
   try {
@@ -109,28 +107,6 @@ export async function syncCart(req, res) {
     res.status(200).json({
       message: "Cart synced successfully",
       data: updatedUser.cart,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-export async function checkout(req, res) {
-  try {
-    const { cartItems, totalPrice, userId } = req.body;
-
-    if (req.userId !== userId)
-      return res.status(401).json({ data: null, message: "Unauthorized" });
-
-    const newOrder = await Order.create({
-      user: req.userId,
-      courses: cartItems,
-      totalPrice,
-    });
-
-    res.status(200).json({
-      message: "Checkout successfully",
-      data: newOrder,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -12,6 +12,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import CartProvider from "./context/cartContext";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: "/courses/:courseId", element: <CourseDetailsPage /> },
       { path: "/cart", element: <CartPage /> },
       { path: "/checkout", element: <CheckoutPage /> },
+      { path: "/checkout/success", element: <CheckoutSuccessPage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

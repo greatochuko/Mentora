@@ -13,14 +13,14 @@ const cartContext = createContext<{
   addItemToCart(course: CourseType): void;
   removeItemFromCart(courseId: string): void;
   syncCart(): void;
-  resetCart(): void;
+  resetCartToLocalStorage(): void;
 }>({
   cartItems: [],
   cartLoading: true,
   addItemToCart: () => {},
   removeItemFromCart: () => {},
   syncCart: () => {},
-  resetCart: () => {},
+  resetCartToLocalStorage: () => {},
 });
 
 export default function CartProvider({
@@ -125,7 +125,7 @@ export default function CartProvider({
     }
   }
 
-  function resetCart() {
+  function resetCartToLocalStorage() {
     const localStorageCart: CartItemType[] = JSON.parse(
       localStorage.getItem("cart") || "[]",
     );
@@ -140,7 +140,7 @@ export default function CartProvider({
         addItemToCart,
         removeItemFromCart,
         syncCart,
-        resetCart,
+        resetCartToLocalStorage,
       }}
     >
       {children}

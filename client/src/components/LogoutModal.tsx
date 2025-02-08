@@ -5,7 +5,7 @@ import LoadingIndicator from "./LoadingIndicator";
 
 export default function LogoutModal({ closeModal }: { closeModal(): void }) {
   const { updateUser } = useUserContext();
-  const { resetCart } = useCartContext();
+  const { resetCartToLocalStorage: resetCart } = useCartContext();
 
   const { fetchData, loading } = useFetch({
     url: "/auth/logout",

@@ -13,13 +13,14 @@ export default function CheckoutPage() {
   const [CVV, setCVV] = useState("");
 
   const { user } = useUserContext();
-  const { cartItems, cartLoading } = useCartContext();
+  const { cartItems, cartLoading, resetCartToLocalStorage } = useCartContext();
 
   const navigate = useNavigate();
 
   const { fetchData, loading } = useFetch({
-    url: "/cart/checkout",
+    url: "/order",
     onSuccess(result) {
+      resetCartToLocalStorage();
       navigate(`/checkout/success?id=${result.data._id}`);
     },
     method: "POST",
@@ -99,7 +100,7 @@ export default function CheckoutPage() {
               if (value.length > 19) value = value.slice(0, 19);
               setCardNumber(value);
             }}
-            className="rounded-md border border-zinc-300 p-2"
+            className="w-full rounded-md border border-zinc-300 p-2"
           />
         </div>
         <div className="flex gap-4">
@@ -120,7 +121,7 @@ export default function CheckoutPage() {
                   value = `${value.slice(0, 2)}/${value.slice(2)}`;
                 setExpiryDate(value);
               }}
-              className="rounded-md border border-zinc-300 p-2"
+              className="w-full rounded-md border border-zinc-300 p-2"
             />
           </div>
           <div className="flex flex-1 flex-col gap-1">
@@ -138,7 +139,7 @@ export default function CheckoutPage() {
 
                 setCVV(e.target.value);
               }}
-              className="rounded-md border border-zinc-300 p-2"
+              className="w-full rounded-md border border-zinc-300 p-2"
             />
           </div>
         </div>
@@ -151,7 +152,7 @@ export default function CheckoutPage() {
             placeholder="John Doe"
             value={nameOnCard}
             onChange={(e) => setNameOnCard(e.target.value)}
-            className="rounded-md border border-zinc-300 p-2"
+            className="w-full rounded-md border border-zinc-300 p-2"
           />
         </div>
         <button
