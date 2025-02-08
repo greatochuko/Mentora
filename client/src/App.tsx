@@ -15,6 +15,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 import MyCoursesPage from "./pages/MyCoursesPage";
 import CourseWatchPage from "./pages/CourseWatchPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/checkout/success", element: <CheckoutSuccessPage /> },
       { path: "/my-courses", element: <MyCoursesPage /> },
       { path: "/my-courses/:courseId", element: <CourseWatchPage /> },
+      { path: "/profile", element: <UserProfilePage /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },

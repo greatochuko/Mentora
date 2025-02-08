@@ -52,7 +52,13 @@ export default function UserProvider({
   }
 
   return (
-    <userContext.Provider value={{ user, loadingSession: loading, updateUser }}>
+    <userContext.Provider
+      value={{
+        user,
+        loadingSession: loading,
+        updateUser,
+      }}
+    >
       {children}
     </userContext.Provider>
   );
