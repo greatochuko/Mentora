@@ -1,4 +1,4 @@
-import { RxCaretDown, RxCaretUp } from "react-icons/rx";
+import { RxCaretDown, RxCaretUp, RxDashboard } from "react-icons/rx";
 import { UserType } from "../context/userContext";
 import { useEffect, useRef, useState } from "react";
 import { MdComputer, MdLogout } from "react-icons/md";
@@ -73,6 +73,13 @@ export default function UserDropdown({ user }: { user: UserType }) {
             className="flex items-center gap-1 rounded-md px-4 py-2 duration-200 hover:bg-zinc-100"
           >
             <MdComputer /> My Courses
+          </Link>
+          <Link
+            onClick={() => setDropdownOpen(false)}
+            to={"/dashboard"}
+            className="flex items-center gap-1 rounded-md px-4 py-2 duration-200 hover:bg-zinc-100"
+          >
+            <RxDashboard /> Dashboard
           </Link>
           <button
             onClick={openSignOutModal}
