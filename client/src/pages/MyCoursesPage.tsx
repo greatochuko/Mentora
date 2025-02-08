@@ -8,8 +8,6 @@ import useFetch from "../hooks/useFetch";
 export default function MyCoursesPage() {
   const { user, loadingSession, updateUser } = useUserContext();
 
-  if (loadingSession) return <LoadingPage />;
-
   const { fetchData } = useFetch({
     url: "/auth/session",
     startLoading: true,
@@ -22,6 +20,8 @@ export default function MyCoursesPage() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (loadingSession) return <LoadingPage />;
 
   if (!user) return <Navigate to={"/login"} replace />;
 
