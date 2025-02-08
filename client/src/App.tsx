@@ -18,6 +18,7 @@ import CourseWatchPage from "./pages/CourseWatchPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import DashboardPage from "./pages/DashboardPage";
 import DashboardLayout from "./components/DashboardLayout";
+import DashboardCoursesPage from "./pages/DashboardCoursesPage";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    children: [{ index: true, element: <DashboardPage /> }],
+    children: [
+      { index: true, element: <DashboardPage /> },
+      { path: "/dashboard/courses", element: <DashboardCoursesPage /> },
+    ],
   },
   {
     element: <AuthGuard />,

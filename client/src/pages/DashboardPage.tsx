@@ -36,30 +36,30 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
         <div className="flex gap-4 rounded-lg border border-blue-200 bg-blue-50 p-4">
-          <MdComputer className="h-14 w-14 fill-blue-400" />
+          <MdComputer className="w-14 fill-blue-400 sm:h-14" />
           <div className="flex-1">
             <h3 className="text-xl font-medium">23</h3>
             <p className="text-sm text-zinc-500">Courses sold</p>
           </div>
         </div>
         <div className="flex gap-4 rounded-lg border border-green-200 bg-green-50 p-4">
-          <MdComputer className="h-14 w-14 fill-green-400" />
+          <MdComputer className="w-14 fill-green-400 sm:h-14" />
           <div className="flex-1">
             <h3 className="text-xl font-medium">$5000</h3>
             <p className="text-sm text-zinc-500">Total revenue</p>
           </div>
         </div>
         <div className="flex gap-4 rounded-lg border border-purple-200 bg-purple-50 p-4">
-          <MdComputer className="h-14 w-14 fill-purple-400" />
+          <MdComputer className="w-14 fill-purple-400 sm:h-14" />
           <div className="flex-1">
             <h3 className="text-xl font-medium">50</h3>
             <p className="text-sm text-zinc-500">Total students</p>
           </div>
         </div>
         <div className="flex gap-4 rounded-lg border border-orange-200 bg-orange-50 p-4">
-          <MdComputer className="h-14 w-14 fill-orange-400" />
+          <MdComputer className="w-14 fill-orange-400 sm:h-14" />
           <div className="flex-1">
             <h3 className="text-xl font-medium">10</h3>
             <p className="text-sm text-zinc-500">Total courses</p>
@@ -78,56 +78,58 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-              >
-                Course Name
-              </th>
+        <div className="w-[calc(100vw-5.5rem)] overflow-x-scroll md:w-[calc(100vw-14rem)]">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+                >
+                  Course Name
+                </th>
 
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-              >
-                Duration
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
-              >
-                Price
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {courses.slice(0, 5).map((course) => (
-              <tr key={course._id}>
-                <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
-                  <Link
-                    to={`/dashboard/courses/${course._id}`}
-                    className="hover:underline"
-                  >
-                    {course.title}
-                  </Link>
-                </td>
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                  {formatTime(
-                    course.content.reduce(
-                      (acc, curr) => acc + curr.duration,
-                      0,
-                    ),
-                  )}
-                </td>
-                <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
-                  ${course.price / 100}
-                </td>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+                >
+                  Duration
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+                >
+                  Price
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {courses.slice(0, 5).map((course) => (
+                <tr key={course._id}>
+                  <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+                    <Link
+                      to={`/dashboard/courses/edit/${course._id}`}
+                      className="hover:underline"
+                    >
+                      {course.title}
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                    {formatTime(
+                      course.content.reduce(
+                        (acc, curr) => acc + curr.duration,
+                        0,
+                      ),
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                    ${course.price / 100}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

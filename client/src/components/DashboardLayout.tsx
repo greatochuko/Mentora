@@ -14,7 +14,7 @@ export default function DashboardLayout() {
   if (!user) redirect("/login");
 
   return (
-    <main className="flex min-h-screen gap-4">
+    <main className="flex min-h-screen">
       <DashboardSidebar
         user={user!}
         expandSidebar={expandSidebar}
