@@ -6,11 +6,14 @@ import NotFoundPage from "./NotFoundPage";
 import { CourseType } from "../components/CourseCard";
 import { formatTime } from "../lib/utils";
 import { IoVideocamOutline } from "react-icons/io5";
+import { useUserContext } from "../context/userContext";
 
 export default function CourseWatchPage() {
   const { courseId } = useParams();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [currentTab, setCurrentTab] = useState("Details");
+
+  const { user, loadingSession } = useUserContext();
 
   const { fetchData, data, loading } = useFetch({
     url: `/courses/learning/${courseId}`,
@@ -21,11 +24,12 @@ export default function CourseWatchPage() {
     fetchData();
   }, []);
 
-  if (loading) return <LoadingPage />;
+  if (loading || loadingSession) return <LoadingPage />;
 
   const course = data as CourseType;
 
-  if (!course) return <NotFoundPage />;
+  if (!course || !user?.paidCourses.some((c) => c._id === course._id))
+    return <NotFoundPage />;
 
   const selectedContent = course.content[selectedIndex];
 
