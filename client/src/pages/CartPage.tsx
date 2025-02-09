@@ -4,9 +4,14 @@ import { getCourseRating } from "../lib/utils";
 import { Link } from "react-router-dom";
 import LoadingPage from "../components/LoadingPage";
 import OrderDetails from "../components/OrderDetails";
+import { useEffect } from "react";
 
 export default function CartPage() {
   const { cartItems, removeItemFromCart, cartLoading } = useCartContext();
+
+  useEffect(() => {
+    document.title = `${cartItems.length > 0 ? `Cart (${cartItems.length})` : "Cart"} - LearnEx`;
+  }, [cartItems]);
 
   if (cartLoading) return <LoadingPage />;
 

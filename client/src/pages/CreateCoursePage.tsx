@@ -61,6 +61,12 @@ export default function CreateCoursePage() {
     setChapters(course.content);
   }, [course]);
 
+  useEffect(() => {
+    document.title = course?.title
+      ? `Edit Course - ${course.title}`
+      : "Create New Course";
+  }, [course?.title]);
+
   if (loading) return <LoadingPage />;
 
   function handleUpdateChapter<T extends keyof CourseContentType>(

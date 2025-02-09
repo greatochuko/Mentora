@@ -9,6 +9,10 @@ export default function CheckoutSuccessPage() {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get("id");
 
+  useEffect(() => {
+    document.title = "Order Successful - LearnEx";
+  }, []);
+
   const {
     fetchData,
     loading,

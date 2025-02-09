@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer className="mt-12 flex flex-col items-center justify-between gap-2 bg-neutral-900 p-8 sm:flex-row">
       <Link to={"/"} className="text-lg font-medium text-white">
-        Mentora
+        LearnEx
       </Link>
       <p className="text-sm text-zinc-500">
         &copy;{new Date().getFullYear()} All Rights Reserved

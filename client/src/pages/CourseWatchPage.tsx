@@ -20,13 +20,21 @@ export default function CourseWatchPage() {
     startLoading: true,
   });
 
+  const course = data as CourseType;
+
+  useEffect(() => {
+    if (course.title) {
+      document.title = `Course - ${course.title} - LearnEx`;
+    } else {
+      document.title = "Course Watch - LearnEx";
+    }
+  }, [course.title]);
+
   useEffect(() => {
     fetchData();
   }, []);
 
   if (loading || loadingSession) return <LoadingPage />;
-
-  const course = data as CourseType;
 
   if (!course || !user?.paidCourses.some((c) => c._id === course._id))
     return <NotFoundPage />;

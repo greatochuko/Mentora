@@ -9,7 +9,11 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://mentora-alpha.vercel.app"],
+  origin: [
+    "http://localhost:5173",
+    "https://mentora-alpha.vercel.app",
+    "https://learnex.vercel.app",
+  ],
   methods: ["GET", "POST", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,

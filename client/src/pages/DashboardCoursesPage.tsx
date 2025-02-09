@@ -17,11 +17,12 @@ export default function DashboardCoursesPage() {
     initialData: [],
   });
 
+  const courses = data as CourseType[];
+
   useEffect(() => {
+    document.title = "Dashboard - Courses - LearnEx";
     fetchData();
   }, []);
-
-  const courses = data as CourseType[];
 
   if (loading) return <LoadingPage />;
 

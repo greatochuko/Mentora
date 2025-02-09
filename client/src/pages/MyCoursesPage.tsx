@@ -18,6 +18,7 @@ export default function MyCoursesPage() {
   });
 
   useEffect(() => {
+    document.title = "My Courses - LearnEx";
     fetchData();
   }, []);
 

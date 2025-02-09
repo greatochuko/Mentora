@@ -21,6 +21,10 @@ export default function UserProfilePage() {
     setProfilePicture(user?.profilePicture || "");
   }, [user?.firstName, user?.lastName, user?.profilePicture]);
 
+  useEffect(() => {
+    document.title = "My Profile - Learnex";
+  }, []);
+
   if (loadingSession) return <LoadingPage />;
 
   async function handleUpdateInformation(e: React.FormEvent) {

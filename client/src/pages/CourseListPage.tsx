@@ -16,6 +16,10 @@ export default function CourseListPage() {
   const query = searchParams.get("query");
   const page = searchParams.get("page");
 
+  useEffect(() => {
+    document.title = `Courses - ${query ? `Search results for "${query}" - ` : ""}Page ${page || 1}`;
+  }, [page, query]);
+
   const { fetchData, loading, data, resData } = useFetch({
     url: `/courses/search?query=${query}&page=${page}&sort=${sortBy}`,
     startLoading: true,

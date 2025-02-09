@@ -43,7 +43,7 @@ export default function DashboardSidebar({
           to={"/"}
           className={`font-medium text-white duration-200 hover:text-blue-400 ${expandSidebar ? "hidden md:inline" : "hidden"}`}
         >
-          Mentora
+          LearnEx
         </Link>
         <button
           onClick={() => setExpandSidebar((curr) => !curr)}

@@ -19,6 +19,7 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
+    document.title = "Dashboard - LearnEx";
     fetchData();
   }, []);
 

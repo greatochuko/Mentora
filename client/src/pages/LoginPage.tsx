@@ -5,6 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useFetch from "../hooks/useFetch";
 import { useUserContext } from "../context/userContext";
 import { useCartContext } from "../context/cartContext";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,10 @@ export default function LoginPage() {
     },
   });
 
+  useEffect(() => {
+    document.title = "Login - LearnEx";
+  }, []);
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     await fetchData();
@@ -34,7 +39,7 @@ export default function LoginPage() {
     <div className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-8 p-8 text-sm">
       <div className="flex flex-col items-center justify-center gap-2">
         <Link to={"/"} className="text-base font-medium text-blue-600">
-          Mentora
+          LearnEx
         </Link>
         <h1 className="text-2xl font-medium sm:text-[1.75rem]">
           Welcome Back! 👋

@@ -77,11 +77,19 @@ export default function CourseDetailsPage() {
     startLoading: true,
   });
 
+  const course = data as CourseType;
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  const course = data as CourseType;
+  useEffect(() => {
+    if (course) {
+      document.title = `${course.title} - LearnEx`;
+    } else {
+      document.title = "Course Details - LearnEx";
+    }
+  }, [course]);
 
   if (loading) return <LoadingPage />;
 

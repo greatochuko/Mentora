@@ -5,12 +5,17 @@ import { useState } from "react";
 import useFetch from "../hooks/useFetch";
 import LoadingIndicator from "../components/LoadingIndicator";
 import LoadingPage from "../components/LoadingPage";
+import { useEffect } from "react";
 
 export default function CheckoutPage() {
   const [cardNumber, setCardNumber] = useState("");
   const [nameOnCard, setNameOnCard] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [CVV, setCVV] = useState("");
+
+  useEffect(() => {
+    document.title = "Checkout - LearnEx";
+  }, []);
 
   const { user } = useUserContext();
   const { cartItems, cartLoading, resetCart } = useCartContext();
