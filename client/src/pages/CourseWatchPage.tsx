@@ -23,12 +23,12 @@ export default function CourseWatchPage() {
   const course = data as CourseType;
 
   useEffect(() => {
-    if (course.title) {
+    if (course?.title) {
       document.title = `Course - ${course.title} - LearnEx`;
     } else {
       document.title = "Course Watch - LearnEx";
     }
-  }, [course.title]);
+  }, [course?.title]);
 
   useEffect(() => {
     fetchData();
